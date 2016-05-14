@@ -6,11 +6,13 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from django_countries.fields import CountryField
 
+from .manager import TrackerManager
+
 
 @python_2_unicode_compatible
 class Tracker(models.Model):
     """
-    A generic counter model, which can be related to any other model to count
+    A generic tracker model, which can be related to any other model to track
     actions that involves it.
     """
     PC = 'pc'
@@ -44,7 +46,7 @@ class Tracker(models.Model):
     system_version = models.CharField(max_length=30, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 
-    objects = CounterManager()
+    objects = TrackerManager()
 
     class Meta:
         ordering = ('-timestamp',)
