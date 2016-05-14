@@ -1,0 +1,7 @@
+.*.swp
+*.pyc
+
+__pycache__
+build
+dist
+django_tracking_analyzer.egg-info
