@@ -32,10 +32,15 @@ setup(
     author_email='jose.lpa@gmail.com',
     url='http://jose.patino.me',
     packages=find_packages(exclude=['tests*']),
-    install_requires=['Django>=1.7'],
+    install_requires=[
+        'Django>=1.7',
+        'django-countries',
+        'django-ipware',
+        'django-user-agents',
+        'geoip2'
+    ],
     test_suite='tests',
     tests_require=[
-        # 'mock',
         'pytest-django',
         'pytest-cov',
         'pytest-pep8',
