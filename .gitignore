@@ -1,5 +1,6 @@
 .*.swp
 *.pyc
+.coverage
 coverage.xml
 junit.xml
 
