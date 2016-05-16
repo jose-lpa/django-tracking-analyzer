@@ -44,6 +44,7 @@ setup(
         'pytest-django',
         'pytest-cov',
         'pytest-pep8',
+        'pytest-pylint',
     ],
     cmdclass={'test': PyTest},
 )
