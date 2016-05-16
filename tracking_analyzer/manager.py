@@ -1,7 +1,7 @@
 import logging
 
 from django.contrib.auth.models import User
-from django.contrib.gis.geoip2 import GeoIP2
+from django.contrib.gis.geoip2 import GeoIP2, GeoIP2Exception
 from django.db import models
 from django.http import HttpRequest
 
@@ -47,24 +47,27 @@ class TrackerManager(models.Manager):
         else:
             device_type = self.model.UNKNOWN
 
+        city = {}
+
         # Get the IP address and so the geographical info, if available.
         ip_address = get_real_ip(request) or ''
         if not ip_address:
             logger.debug(
                 'Could not determine IP address for request %s', request)
-
-        geo = GeoIP2()
-        try:
-            city = geo.city(ip_address)
-        except GeoIP2Error:
-            city = {}
+        else:
+            geo = GeoIP2()
+            try:
+                city = geo.city(ip_address)
+            except (GeoIP2Error, GeoIP2Exception):
+                logger.exception(
+                    'Unable to determine geolocation for address %s', ip_address)
 
         tracker = self.model.objects.create(
             content_object=content_object,
             ip_address=ip_address,
-            ip_country=city.get('country_code') or '',
-            ip_region=city.get('region') or '',
-            ip_city=city.get('city') or '',
+            ip_country=city.get('country_code', ''),
+            ip_region=city.get('region', ''),
+            ip_city=city.get('city', ''),
             referrer=request.META.get('HTTP_REFERER', ''),
             device_type=device_type,
             device=request.user_agent.device.family,
