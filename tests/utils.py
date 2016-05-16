@@ -29,7 +29,7 @@ def build_mock_request(url):
     request.META['REMOTE_ADDR'] = '208.67.222.222'
 
     # Request is performed by a system user.
-    request.user, created = User.objects.get_or_create(
+    request.user, _ = User.objects.get_or_create(
         username='test_user',
         first_name='Test',
         last_name='User',
