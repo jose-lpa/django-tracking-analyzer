@@ -80,20 +80,12 @@ class TrackerTestCase(TestCase):
     @patch('django.contrib.gis.geoip2.GeoIP2.city')
     def test_create_from_request_missing_geoip_data(self, mock):
         """
-        If GeoIP data is not available, or the ``geolite2`` function fails, the
-        system must keep moving. Just GeoIP data won't be available.
+        If GeoIP data is not available, or the ``GeoIP2.city`` function fails,
+        the system must keep moving. Just GeoIP data won't be available.
         """
-        # Mock the response from `GeoIP2.city()` method.
-        mock.return_value = {
-            'country_code': '',
-            'region': '',
-            'city': ''
-        }
-
         # Modify the request object to unset the `REMOTE_ADDR` IP meta data.
-        # That should make the using of `geoip2.lookup` method technically
-        # raise a `ValueError` exception. The system must be smart enough to
-        # deal with it.
+        # That should make the using of `ipware.ip.get_real_ip()` method return
+        # an empty IP value. The system must deal with empty IP addresses.
         self.request.META['REMOTE_ADDR'] = ''
 
         tracker = Tracker.objects.create_from_request(self.request, self.post)
@@ -103,3 +95,6 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.ip_country, '')
         self.assertEqual(tracker.ip_region, '')
         self.assertEqual(tracker.ip_city, '')
+
+        # And `GeoIP2` should have been never called.
+        self.assertFalse(mock.called)
