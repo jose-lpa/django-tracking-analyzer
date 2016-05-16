@@ -1,7 +1,10 @@
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
+from django.contrib.gis.geoip2 import GeoIP2Exception
 from django.test import TestCase
+
+from geoip2.errors import GeoIP2Error
 
 from tracking_analyzer.models import Tracker
 from .models import Post
@@ -98,3 +101,33 @@ class TrackerTestCase(TestCase):
 
         # And `GeoIP2` should have been never called.
         self.assertFalse(mock.called)
+
+    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    def test_create_from_request_django_geoip_exception(self, mock):
+        """
+        Tests Django ``contrib.gis.geoip2.GeoIP2Exception`` handling.
+        """
+        mock.side_effect = GeoIP2Exception
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        # Now check the results. Empty data for IP address and GeoIP stuff.
+        self.assertEqual(tracker.ip_address, '208.67.222.222')
+        self.assertEqual(tracker.ip_country, '')
+        self.assertEqual(tracker.ip_region, '')
+        self.assertEqual(tracker.ip_city, '')
+
+    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    def test_create_from_request_geoip2_exception(self, mock):
+        """
+        Tests Django ``geoip2.GeoIP2Error`` handling.
+        """
+        mock.side_effect = GeoIP2Error
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        # Now check the results. Empty data for IP address and GeoIP stuff.
+        self.assertEqual(tracker.ip_address, '208.67.222.222')
+        self.assertEqual(tracker.ip_country, '')
+        self.assertEqual(tracker.ip_region, '')
+        self.assertEqual(tracker.ip_city, '')
