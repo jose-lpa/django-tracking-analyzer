@@ -1,7 +1,11 @@
 .*.swp
 *.pyc
+coverage.xml
+junit.xml
 
 __pycache__
+.cache
 build
 dist
 django_tracking_analyzer.egg-info
+.eggs
