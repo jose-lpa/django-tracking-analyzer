@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 
@@ -23,16 +25,23 @@ class TrackerTestCase(TestCase):
 
         self.request = build_mock_request('/testing/')
 
-    def test_create_from_request_manager(self):
+    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    def test_create_from_request_manager(self, mock):
         """
         Tests the ``create_from_request`` method from the custom
         ``TrackerManager`` in a successful execution.
         """
+        # Mock the response from `GeoIP2.city()` method.
+        mock.return_value = {
+            'country_code': 'US',
+            'region': 'CA',
+            'city': 'San Francisco'
+        }
+
         tracker = Tracker.objects.create_from_request(self.request, self.post)
 
         self.assertEqual(tracker.browser, 'Chrome')
         self.assertEqual(tracker.browser_version, '49.0.2623')
-        self.assertDictEqual(tracker.cookies, self.request.COOKIES)
         self.assertEqual(tracker.device, 'Other')
         self.assertEqual(tracker.device_type, Tracker.PC)
         self.assertEqual(tracker.system, 'Mac OS X')
@@ -68,11 +77,19 @@ class TrackerTestCase(TestCase):
             self.request, 'NOT_A_MODEL'
         )
 
-    def test_create_from_request_missing_geoip_data(self):
+    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    def test_create_from_request_missing_geoip_data(self, mock):
         """
         If GeoIP data is not available, or the ``geolite2`` function fails, the
         system must keep moving. Just GeoIP data won't be available.
         """
+        # Mock the response from `GeoIP2.city()` method.
+        mock.return_value = {
+            'country_code': '',
+            'region': '',
+            'city': ''
+        }
+
         # Modify the request object to unset the `REMOTE_ADDR` IP meta data.
         # That should make the using of `geoip2.lookup` method technically
         # raise a `ValueError` exception. The system must be smart enough to

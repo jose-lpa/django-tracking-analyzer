@@ -1,5 +1,3 @@
-import os
-
 SECRET_KEY = 'django_tracking_analyzer_secret'
 
 DATABASES = {
@@ -18,4 +16,7 @@ INSTALLED_APPS = [
 ]
 
 # Django GIS GeoIP2 settings.
-GEOIP_PATH = os.path.join(DJANGO_PROJECT_DIR, 'geoip_db')
+# This setting is Django-mandatory to make use of GeoIP2 facilities. We are
+# mocking the `GeoIP2.city()` method in the unit tests, so it's not necessary
+# to download and set up the MaxMind databases.
+GEOIP_PATH = 'tests'
