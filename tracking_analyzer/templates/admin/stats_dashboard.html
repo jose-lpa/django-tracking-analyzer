@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block title %}{% trans 'Tracking Dashboard' %} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+{#    &rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name }}</a>#}
+    &rsaquo; <a href="{% url 'admin:stats_dashboard' %}">{% trans 'Dashboard' %}</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div id="container1" style="border:1px dotted blue; width: 700px; height: 475px; position: relative;"></div>
+
+  <script src="{% static 'admin/js/vendor/d3/d3.min.js' %}"></script>
+  <script src="{% static 'admin/js/vendor/topojson/topojson.min.js' %}"></script>
+  <script src="{% static 'admin/js/vendor/datamaps/datamaps.world.min.js' %}"></script>
+
+  <script src="{% static 'admin/js/world_map.js' %}"></script>
+{% endblock %}
