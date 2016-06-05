@@ -1,6 +1,11 @@
+import json
+
 from django.conf.urls import patterns, url
 from django.contrib import admin
+from django.db.models import Count
 from django.views.generic import TemplateView
+
+from django_countries import countries
 
 from .models import Tracker
 
@@ -25,12 +30,20 @@ class TrackerAdmin(admin.ModelAdmin):
         'user',
     ]
 
-    # Block up any admin user create actions. `Tracker` instances are
-    # only data units to be seen or deleted.
     def has_add_permission(self, request):
+        """
+        Overrides base ``has_add_permission`` method to block up any admin user
+        create actions. ``Tracker`` instances are only data to be seen or
+        deleted.
+        """
         return False
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
+        """
+        Overrides base ``change_view`` method to block up any admin user create
+        or update actions. ``Tracker`` instances are only data to be seen or
+        deleted.
+        """
         extra_context = extra_context or {}
         extra_context.update(
             {
@@ -42,6 +55,29 @@ class TrackerAdmin(admin.ModelAdmin):
 
         return super().change_view(
             request, object_id, form_url, extra_context=extra_context)
+
+    def changelist_view(self, request, extra_context=None):
+        """
+        Overrides base ``changelist_view`` method to add analytics datasets to
+        the response.
+        """
+        extra_context = extra_context or {}
+        countries_count = []
+        response = super().changelist_view(request, extra_context)
+
+        # Get the current objects queryset to analyze data from it.
+        queryset = response.context_data['cl'].queryset
+
+        trackers = queryset.values('ip_country').annotate(
+            trackers=Count('id')).order_by()
+        for tracker in trackers:
+            countries_count.append(
+                [countries.alpha3(tracker['ip_country']), tracker['trackers']])
+
+        extra_context['countries_count'] = json.dumps(countries_count)
+        response.context_data.update(extra_context)
+
+        return response
 
     def get_urls(self):
         urls = super(TrackerAdmin, self).get_urls()

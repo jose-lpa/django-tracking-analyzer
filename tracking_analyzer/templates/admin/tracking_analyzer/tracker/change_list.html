@@ -1,0 +1,52 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls admin_static admin_list %}
+
+{% block pretitle %}
+  <div id="container1" style="border:1px dotted blue; width: 700px; height: 475px; position: relative;"></div>
+
+  <script src="{% static 'admin/js/vendor/d3/d3.min.js' %}"></script>
+  <script src="{% static 'admin/js/vendor/topojson/topojson.min.js' %}"></script>
+  <script src="{% static 'admin/js/vendor/datamaps/datamaps.world.min.js' %}"></script>
+  <script>
+    {# World map data rendering code from https://github.com/markmarkoh/datamaps #}
+    var series = {{ countries_count|safe }};
+    var dataset = {};
+
+    var onlyValues = series.map(function(obj){ return obj[1]; });
+    var minValue = Math.min.apply(null, onlyValues),
+        maxValue = Math.max.apply(null, onlyValues);
+
+    var paletteScale = d3.scale.linear().domain([minValue,maxValue]).range(["#EFEFFF","#02386F"]);
+
+    series.forEach(function(item){
+      var iso = item[0];
+      var value = item[1];
+      dataset[iso] = {
+        numberOfThings: value,
+        fillColor: paletteScale(value)
+      };
+    });
+
+    new Datamap({
+      element: document.getElementById('container1'),
+      projection: 'mercator',
+      fills: { defaultFill: '#F5F5F5' },
+      data: dataset,
+      geographyConfig: {
+        borderColor: '#DEDEDE',
+        highlightBorderWidth: 2,
+        highlightFillColor: function(geo) {
+          return geo['fillColor'] || '#F5F5F5';
+        },
+        highlightBorderColor: '#B7B7B7',
+        popupTemplate: function(geo, data) {
+          if (!data) { return ; }
+          return ['<div class="hoverinfo">',
+            '<strong>', geo.properties.name, '</strong>',
+            '<br>Count: <strong>', data.numberOfThings, '</strong>',
+            '</div>'].join('');
+        }
+      }
+    });
+  </script>
+{% endblock %}
