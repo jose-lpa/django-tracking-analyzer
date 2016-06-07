@@ -48,9 +48,6 @@ class Tracker(models.Model):
 
     objects = TrackerManager()
 
-    class Meta:
-        ordering = ('-timestamp',)
-
     def __str__(self):
         return '{0} :: {1}, {2}'.format(
             self.content_object, self.user, self.timestamp)
