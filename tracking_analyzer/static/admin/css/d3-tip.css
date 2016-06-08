@@ -1,4 +1,4 @@
-body {
+#devices-stats {
   font: 10px sans-serif;
 }
 
@@ -14,7 +14,7 @@ body {
 }
 
 .bar:hover {
-  fill: darkblue ;
+  fill: blue ;
 }
 
 .x.axis path {
