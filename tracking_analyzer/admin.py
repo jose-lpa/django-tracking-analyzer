@@ -29,6 +29,7 @@ class TrackerAdmin(admin.ModelAdmin):
         'content_object', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
         'user',
     ]
+    ordering = ['-timestamp']
 
     def has_add_permission(self, request):
         """
@@ -68,13 +69,19 @@ class TrackerAdmin(admin.ModelAdmin):
         # Get the current objects queryset to analyze data from it.
         queryset = response.context_data['cl'].queryset
 
+        # Requests per country.
         trackers = queryset.values('ip_country').annotate(
             trackers=Count('id')).order_by()
         for tracker in trackers:
             countries_count.append(
                 [countries.alpha3(tracker['ip_country']), tracker['trackers']])
 
+        # Requests by device.
+        devices_count = queryset.values('device_type').annotate(
+            count=Count('id')).order_by()
+
         extra_context['countries_count'] = json.dumps(countries_count)
+        extra_context['devices_count'] = json.dumps(list(devices_count))
         response.context_data.update(extra_context)
 
         return response
