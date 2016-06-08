@@ -1,0 +1,9 @@
+.stats-panel {
+    overflow: hidden;
+    width: 100%;
+}
+
+.stats-widget {
+    float: left;
+    text-align: center;
+}
