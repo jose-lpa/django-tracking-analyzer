@@ -2,6 +2,7 @@ import json
 
 from django.conf.urls import patterns, url
 from django.contrib import admin
+from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.views.generic import TemplateView
 
@@ -23,13 +24,26 @@ class TrackerAdmin(admin.ModelAdmin):
         'browser_version', 'system', 'system_version', 'user'
     ]
     list_filter = [
-        ('timestamp', admin.DateFieldListFilter), 'device_type'
+        ('timestamp', admin.DateFieldListFilter), 'device_type', 'user'
     ]
     list_display = [
         'content_object', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
-        'user',
+        'user_link',
     ]
     ordering = ['-timestamp']
+
+    def user_link(self, obj):
+        if obj.user:
+            return '<a href="{0}?user__id__exact={1}">{2}</a>'.format(
+                reverse('admin:tracking_analyzer_tracker_changelist'),
+                obj.user.pk,
+                obj.user
+            )
+        else:
+            return 'Anonymous'
+
+    user_link.allow_tags = True
+    user_link.short_description = 'User'
 
     def has_add_permission(self, request):
         """
