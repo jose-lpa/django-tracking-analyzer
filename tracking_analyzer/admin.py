@@ -24,7 +24,7 @@ class TrackerAdmin(admin.ModelAdmin):
         'browser_version', 'system', 'system_version', 'user'
     ]
     list_filter = [
-        ('timestamp', admin.DateFieldListFilter), 'device_type', 'user'
+        ('timestamp', admin.DateFieldListFilter), 'device_type'
     ]
     list_display = [
         'content_object', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
