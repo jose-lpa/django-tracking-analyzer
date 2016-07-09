@@ -76,12 +76,15 @@ class TrackerAdmin(admin.ModelAdmin):
             countries_count.append(
                 [countries.alpha3(tracker['ip_country']), tracker['trackers']])
 
-        # Requests by device.
-        devices_count = queryset.values('device_type').annotate(
-            count=Count('id')).order_by()
-
         extra_context['countries_count'] = json.dumps(countries_count)
-        extra_context['devices_count'] = json.dumps(list(devices_count))
+
+        # Requests by device (when not filtering by device).
+        if 'device_type__exact' not in request.GET:
+            devices_count = queryset.values('device_type').annotate(
+                count=Count('id')).order_by()
+
+            extra_context['devices_count'] = json.dumps(list(devices_count))
+
         response.context_data.update(extra_context)
 
         return response
