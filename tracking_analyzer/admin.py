@@ -24,15 +24,44 @@ class TrackerAdmin(admin.ModelAdmin):
         'browser_version', 'system', 'system_version', 'user'
     ]
     list_filter = [
-        ('timestamp', admin.DateFieldListFilter), 'device_type'
+        ('timestamp', admin.DateFieldListFilter), 'device_type', 'content_type'
     ]
     list_display = [
-        'content_object', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
+        'details', 'content_object_link', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
         'user_link',
     ]
     ordering = ['-timestamp']
 
+    def details(self, obj):
+        """
+        Define the 'Details' column rows display.
+        """
+        return '<a href="{0}">Details</a>'.format(
+            reverse('admin:tracking_analyzer_tracker_change', args=(obj.pk,)))
+
+    details.allow_tags = True
+    details.short_description = 'Details'
+
+    def content_object_link(self, obj):
+        """
+        Define the 'Content Object' column rows display.
+        """
+        return '<a href="{0}?' \
+               'content_type__id__exact={1}' \
+               '&object_id__exact={2}">{3}</a>'.format(
+                    reverse('admin:tracking_analyzer_tracker_changelist'),
+                    obj.content_type.id,
+                    obj.object_id,
+                    obj
+               )
+
+    content_object_link.allow_tags = True
+    content_object_link.short_description = 'Content object'
+
     def user_link(self, obj):
+        """
+        Define the 'User' column rows display.
+        """
         if obj.user:
             return '<a href="{0}?user__id__exact={1}">{2}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
