@@ -23,7 +23,7 @@
   <script src="{% static 'admin/js/vendor/d3-tip/d3-tip.min.js' %}"></script>
 
   <script>
-    var countries = {{ countries_count|safe }};
+    var countries = {% if countries_count %}{{ countries_count|safe }}{% else %}null{% endif %};
     var devices = '{{ devices_count|safe }}';
   </script>
 
