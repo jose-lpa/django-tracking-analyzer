@@ -27,7 +27,7 @@ class TrackerAdmin(admin.ModelAdmin):
         ('timestamp', admin.DateFieldListFilter), 'device_type', 'content_type'
     ]
     list_display = [
-        'details', 'content_object_link', 'timestamp', 'ip_address', 'ip_country', 'ip_city',
+        'details', 'content_object_link', 'timestamp', 'ip_address', 'ip_country_link', 'ip_city',
         'user_link',
     ]
     ordering = ['-timestamp']
@@ -57,6 +57,22 @@ class TrackerAdmin(admin.ModelAdmin):
 
     content_object_link.allow_tags = True
     content_object_link.short_description = 'Content object'
+
+    def ip_country_link(self, obj):
+        """
+        Define the 'IP Country' column rows display.
+        """
+        if obj.ip_country:
+            return '<a href="{0}?ip_country__exact={1}">{2}</a>'.format(
+                reverse('admin:tracking_analyzer_tracker_changelist'),
+                obj.ip_country,
+                obj.ip_country.name
+            )
+        else:
+            return '-'
+
+    ip_country_link.allow_tags = True
+    ip_country_link.short_description = 'IP Country'
 
     def user_link(self, obj):
         """
@@ -112,14 +128,15 @@ class TrackerAdmin(admin.ModelAdmin):
         # Get the current objects queryset to analyze data from it.
         queryset = response.context_data['cl'].queryset
 
-        # Requests per country.
-        trackers = queryset.values('ip_country').annotate(
-            trackers=Count('id')).order_by()
-        for tracker in trackers:
-            countries_count.append(
-                [countries.alpha3(tracker['ip_country']), tracker['trackers']])
+        # Requests by country (when no filtering by country).
+        if 'ip_country__exact' not in request.GET:
+            trackers = queryset.values('ip_country').annotate(
+                trackers=Count('id')).order_by()
+            for track in trackers:
+                countries_count.append(
+                    [countries.alpha3(track['ip_country']), track['trackers']])
 
-        extra_context['countries_count'] = json.dumps(countries_count)
+            extra_context['countries_count'] = json.dumps(countries_count)
 
         # Requests by device (when not filtering by device).
         if 'device_type__exact' not in request.GET:
