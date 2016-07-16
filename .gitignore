@@ -1,12 +1,38 @@
-.*.swp
+# Development.
 *.pyc
+.*.swp
+
+# Testing and code coverage.
 .coverage
 coverage.xml
 junit.xml
 
-__pycache__
+# Distribution / packaging
+build/
 .cache
-build
-dist
-django_tracking_analyzer.egg-info
-.eggs
+develop-eggs/
+dist/
+downloads/
+*.egg
+*.egg-info/
+.eggs/
+eggs/
+env/
+.installed.cfg
+lib/
+lib64/
+parts/
+__pycache__
+.Python
+sdist/
+var/
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
