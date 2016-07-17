@@ -27,7 +27,7 @@ class TrackerAdmin(admin.ModelAdmin):
         ('timestamp', admin.DateFieldListFilter), 'device_type', 'content_type'
     ]
     list_display = [
-        'details', 'content_object_link', 'timestamp', 'ip_address',
+        'details', 'content_object_link', 'timestamp', 'ip_address_link',
         'ip_country_link', 'ip_city_link', 'user_link',
     ]
     ordering = ['-timestamp']
@@ -57,6 +57,21 @@ class TrackerAdmin(admin.ModelAdmin):
 
     content_object_link.allow_tags = True
     content_object_link.short_description = 'Content object'
+
+    def ip_address_link(self, obj):
+        """
+        Define the 'IP Address' column rows display.
+        """
+        if obj.ip_address:
+            return '<a href="{0}?ip_address__exact={1}">{1}</a>'.format(
+                reverse('admin:tracking_analyzer_tracker_changelist'),
+                obj.ip_address,
+            )
+        else:
+            return '-'
+
+    ip_address_link.allow_tags = True
+    ip_address_link.short_description = 'IP Address'
 
     def ip_country_link(self, obj):
         """
