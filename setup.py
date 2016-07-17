@@ -26,11 +26,11 @@ class PyTest(TestCommand):
 
 setup(
     name='django-tracking-analyzer',
-    version='0.1',
-    description='User clicks tracking and analytics for Django sites.',
-    author='Jose L. Patino Andres',
+    version='0.1a0',
+    description='User actions tracking and analytics for Django sites.',
+    author='Jose Luis Patino Andres',
     author_email='jose.lpa@gmail.com',
-    url='http://jose.patino.me',
+    url='https://github.com/jose-lpa/django-tracking-analyzer',
     packages=find_packages(exclude=['tests*']),
     install_requires=[
         'Django>=1.7',
@@ -47,4 +47,15 @@ setup(
         'pytest-pylint',
     ],
     cmdclass={'test': PyTest},
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Framework :: Django :: 1.9',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: Unix',
+        'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Software Development :: Libraries :: Application Frameworks'
+]
 )
