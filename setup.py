@@ -51,7 +51,6 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: Unix',
