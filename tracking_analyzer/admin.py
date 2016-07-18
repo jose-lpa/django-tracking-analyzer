@@ -137,7 +137,7 @@ class TrackerAdmin(admin.ModelAdmin):
             }
         )
 
-        return super().change_view(
+        return super(TrackerAdmin, self).change_view(
             request, object_id, form_url, extra_context=extra_context)
 
     def changelist_view(self, request, extra_context=None):
@@ -147,7 +147,8 @@ class TrackerAdmin(admin.ModelAdmin):
         """
         extra_context = extra_context or {}
         countries_count = []
-        response = super().changelist_view(request, extra_context)
+        response = super(TrackerAdmin, self).changelist_view(
+            request, extra_context)
 
         # Get the current objects queryset to analyze data from it.
         queryset = response.context_data['cl'].queryset
