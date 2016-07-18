@@ -8,9 +8,12 @@ DATABASES = {
     }
 }
 
+ROOT_URLCONF = 'tests.urls'
+
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.auth',
+    'django.contrib.admin',
     'tracking_analyzer',
     'tests'
 ]
