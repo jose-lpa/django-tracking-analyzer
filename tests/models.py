@@ -18,4 +18,4 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
 
-        super().save(*args, **kwargs)
+        super(Post, self).save(*args, **kwargs)
