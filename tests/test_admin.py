@@ -154,7 +154,8 @@ class TrackerAdminTestCase(TestCase):
         self.assertFalse(self.tracker_admin.has_add_permission(self.request))
 
     def test_change_view_overridden_to_dismiss_edition_buttons(self):
-        response = self.tracker_admin.change_view(self.request, str(self.tracker.pk))
+        response = self.tracker_admin.change_view(
+            self.request, str(self.tracker.pk))
 
         self.assertFalse(response.context_data['show_save_and_add_another'])
         self.assertFalse(response.context_data['show_save_and_continue'])
