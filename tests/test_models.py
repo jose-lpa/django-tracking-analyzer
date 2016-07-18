@@ -1,4 +1,9 @@
-from unittest.mock import patch
+try:
+    # Python 3
+    from unittest.mock import patch
+except ImportError:
+    # Python 2
+    from mock import patch
 
 from django.contrib.auth.models import User
 from django.contrib.gis.geoip2 import GeoIP2Exception
