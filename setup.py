@@ -41,6 +41,7 @@ setup(
     ],
     test_suite='tests',
     tests_require=[
+        'factory-boy',
         'pytest-django',
         'pytest-cov',
         'pytest-pep8',
