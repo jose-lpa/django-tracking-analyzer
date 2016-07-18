@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.5"
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.4"
+
+install:
+  - pip install tox
+script:
+  - tox -- 
+env:
+  - TOXENV=py27-django19
+  - TOXENV=py34-django19
+  - TOXENV=py35-django19
