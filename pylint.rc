@@ -1,7 +1,6 @@
 [MASTER]
-profile=no
 persistent=yes
-ignore=migrations
+ignore=migrations,factories.py
 cache-size=500
 
 [MESSAGES CONTROL]
@@ -25,7 +24,6 @@ disable=C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,W0311,C0303,
 
 [REPORTS]
 output-format=parseable
-include-ids=yes
 
 
 [BASIC]
@@ -44,10 +42,6 @@ ignore-mixin-members=yes
 # List of classes names for which member attributes should not be checked
 # (useful for classes with attributes dynamically set).
 ignored-classes=SQLObject,WSGIRequest
-
-# When zope mode is activated, add a predefined set of Zope acquired attributes
-# to generated-members.
-zope=no
 
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E0201 when accessed.
