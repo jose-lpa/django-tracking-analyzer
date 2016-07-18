@@ -1,18 +1,12 @@
 import json
 
-from django.conf.urls import patterns, url
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.db.models import Count
-from django.views.generic import TemplateView
 
 from django_countries import countries
 
 from .models import Tracker
-
-
-class StatisticsDashboard(TemplateView):
-    template_name = 'admin/stats_dashboard.html'
 
 
 class TrackerAdmin(admin.ModelAdmin):
@@ -178,14 +172,6 @@ class TrackerAdmin(admin.ModelAdmin):
         response.context_data.update(extra_context)
 
         return response
-
-    def get_urls(self):
-        urls = super(TrackerAdmin, self).get_urls()
-        my_urls = patterns(
-            '',
-            url(r'stats/$', self.admin_site.admin_view(StatisticsDashboard.as_view()), name='stats_dashboard'),
-        )
-        return my_urls + urls
 
 
 admin.site.register(Tracker, TrackerAdmin)
