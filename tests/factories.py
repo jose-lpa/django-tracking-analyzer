@@ -35,7 +35,7 @@ class TrackerFactory(factory.django.DjangoModelFactory):
     ip_region = 'Noord-Holland'
     ip_city = 'Amsterdam'
     device_type = factory.fuzzy.FuzzyChoice(
-        [choice[0] for choice in Tracker.DEVICE_TYPE])
+        choices=(choice[0] for choice in Tracker.DEVICE_TYPE))
     device = 'Other'
     browser = 'Firefox'
     browser_version = '47'
