@@ -1,6 +1,6 @@
 [MASTER]
 persistent=yes
-ignore=migrations,factories.py
+ignore=migrations
 cache-size=500
 
 [MESSAGES CONTROL]
