@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include tracking_analyzer/static *
+recursive-include tracking_analyzer/templates *
