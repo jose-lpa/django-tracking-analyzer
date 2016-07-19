@@ -26,7 +26,7 @@ class PyTest(TestCommand):
 
 setup(
     name='django-tracking-analyzer',
-    version='0.1a1',
+    version='0.1a2',
     description='User actions tracking and analytics for Django sites.',
     author='Jose Luis Patino Andres',
     author_email='jose.lpa@gmail.com',
