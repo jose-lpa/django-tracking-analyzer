@@ -32,6 +32,7 @@ setup(
     author_email='jose.lpa@gmail.com',
     url='https://github.com/jose-lpa/django-tracking-analyzer',
     packages=find_packages(exclude=['tests*']),
+    include_package_data=True,
     install_requires=[
         'Django>=1.7',
         'django-countries',
