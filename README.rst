@@ -25,16 +25,16 @@ All contributions or fixes are welcome. Just make sure to follow this rules:
 Testing
 -------
 
-Run tests:
+Run tests::
 
-    ``python setup.py test``
+    python setup.py test
 
-Run tests with coverage:
+Run tests with coverage::
 
-    ``python setup.py test --pytest-args "--cov-report xml --cov tracking_analyzer tests/ --verbose --junit-xml=junit.xml --color=yes"``
+    python setup.py test --pytest-args "--cov-report xml --cov tracking_analyzer tests/ --verbose --junit-xml=junit.xml --color=yes"
 
-Run tests with coverage and Pylint/PEP8 checking:
+Run tests with coverage and Pylint/PEP8 checking::
 
-    ``python setup.py test --pytest-args "--cov-report xml --cov tracking_analyzer tests/ --verbose --junit-xml=junit.xml --color=yes --pylint --pylint-rcfile=pylint.rc --pep8"``
+    python setup.py test --pytest-args "--cov-report xml --cov tracking_analyzer tests/ --verbose --junit-xml=junit.xml --color=yes --pylint --pylint-rcfile=pylint.rc --pep8"
 
 .. _PEP-8: https://www.python.org/dev/peps/pep-0008/
