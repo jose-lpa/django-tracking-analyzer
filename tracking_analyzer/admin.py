@@ -26,6 +26,14 @@ class TrackerAdmin(admin.ModelAdmin):
     ]
     ordering = ['-timestamp']
 
+    class Media:
+        js = [
+            'admin/js/vendor/d3/d3.min.js',
+            'admin/js/vendor/topojson/topojson.min.js',
+            'admin/js/vendor/datamaps/datamaps.world.min.js',
+            'admin/js/vendor/d3-tip/d3-tip.min.js'
+        ]
+
     def details(self, obj):
         """
         Define the 'Details' column rows display.
