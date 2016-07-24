@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
 import sys
 
 from setuptools import setup, find_packages
@@ -26,15 +29,15 @@ class PyTest(TestCommand):
 
 setup(
     name='django-tracking-analyzer',
-    version='0.1a3',
+    version='0.1a4',
     description='User actions tracking and analytics for Django sites.',
-    author='Jose Luis Patino Andres',
+    author='José Luis Patiño Andrés',
     author_email='jose.lpa@gmail.com',
     url='https://github.com/jose-lpa/django-tracking-analyzer',
     packages=find_packages(exclude=['tests*']),
     include_package_data=True,
     install_requires=[
-        'Django>=1.7',
+        'Django>=1.9',
         'django-countries',
         'django-ipware',
         'django-user-agents',
@@ -53,11 +56,12 @@ setup(
         'Development Status :: 3 - Alpha',
         'Framework :: Django :: 1.9',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: Unix',
         'Operating System :: MacOS',
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Application Frameworks'
     ]
