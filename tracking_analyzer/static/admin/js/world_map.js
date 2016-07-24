@@ -1,6 +1,8 @@
 /**
  * World map data rendering code from https://github.com/markmarkoh/datamaps
  *
+ * Original code by Marc DiMarco. Licensed under MIT license.
+ *
  * This script expects a `countries` var loaded with some JSON in the template
  * stated before it is loaded.
  **/

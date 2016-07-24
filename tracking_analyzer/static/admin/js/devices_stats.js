@@ -1,6 +1,8 @@
 /**
  * Requests per device statistics.
  *
+ * Original code by Justin Palmer http://bl.ocks.org/Caged/6476579
+ *
  * This script expects a `devices` var loaded with some JSON text in the 
  * template stated before it is loaded.
  **/
