@@ -3,6 +3,7 @@ import json
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.db.models import Count
+from django.db.models.lookups import DateTimeDateTransform, HourTransform, MinuteTransform
 
 from django_countries import countries
 
@@ -158,27 +159,49 @@ class TrackerAdmin(admin.ModelAdmin):
         response = super(TrackerAdmin, self).changelist_view(
             request, extra_context)
 
-        # Get the current objects queryset to analyze data from it.
-        queryset = response.context_data['cl'].queryset
+        if request.method == 'GET':
+            # Get the current objects queryset to analyze data from it.
+            queryset = response.context_data['cl'].queryset
 
-        # Requests by country (when no filtering by country).
-        if 'ip_country__exact' not in request.GET:
-            trackers = queryset.values('ip_country').annotate(
-                trackers=Count('id')).order_by()
-            for track in trackers:
-                countries_count.append(
-                    [countries.alpha3(track['ip_country']), track['trackers']])
+            # Requests by country (when no filtering by country).
+            if 'ip_country__exact' not in request.GET:
+                trackers = queryset.values('ip_country').annotate(
+                    trackers=Count('id')).order_by()
+                for track in trackers:
+                    countries_count.append(
+                        [countries.alpha3(track['ip_country']), track['trackers']])
 
-            extra_context['countries_count'] = json.dumps(countries_count)
+                extra_context['countries_count'] = json.dumps(countries_count)
 
-        # Requests by device (when not filtering by device).
-        if 'device_type__exact' not in request.GET:
-            devices_count = queryset.values('device_type').annotate(
-                count=Count('id')).order_by()
+            # Requests by device (when not filtering by device).
+            if 'device_type__exact' not in request.GET:
+                devices_count = list(queryset.values('device_type').annotate(
+                    count=Count('id')).order_by())
 
-            extra_context['devices_count'] = json.dumps(list(devices_count))
+                extra_context['devices_count'] = json.dumps(devices_count)
 
-        response.context_data.update(extra_context)
+            # Requests time line for the current page changelist.
+            current_page = response.context_data['cl'].page_num
+            current_pks = response.context_data['cl'].paginator.page(
+                current_page + 1).object_list.values_list('pk', flat=True)
+
+            current_results = Tracker.objects.filter(
+                pk__in=current_pks
+            ).annotate(
+                date=DateTimeDateTransform('timestamp'),
+                hour=HourTransform('timestamp'),
+                minute=MinuteTransform('timestamp')
+            ).values(
+                'date', 'hour', 'minute'
+            ).annotate(requests=Count('pk', 'date'))
+
+            for item in current_results:
+                item['date'] = '{0}T{1:02d}:{2:02d}'.format(
+                    item.pop('date'), item.pop('hour'), item.pop('minute'))
+
+            extra_context['requests_count'] = json.dumps(list(current_results))
+
+            response.context_data.update(extra_context)
 
         return response
 
