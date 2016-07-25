@@ -11,6 +11,7 @@
   <div style="overflow: hidden; width: 100%">
     <div id="world-map" class="stats-widget" style="width: 700px; height: 475px;"></div>
     <div id="devices-stats" class="stats-widget"></div>
+    <div id="requests-graph" class="graph-widget"></div>
   </div>
 {% endblock %}
 
@@ -30,6 +31,11 @@
     </script>
     <script src="{% static 'admin/js/devices_stats.js' %}"></script>
   {% endif %}
+
+  <script>
+    var requests = '{{ requests_count|safe }}';
+  </script>
+  <script src="{% static 'admin/js/requests_graph.js' %}"></script>
 
   {{ block.super }}
 {% endblock %}
