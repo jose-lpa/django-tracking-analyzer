@@ -3,10 +3,10 @@ import json
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.db.models import Count
-from django.db.models.lookups import DateTimeDateTransform, HourTransform, MinuteTransform
 
 from django_countries import countries
 
+from .compat import DateTimeDateTransform, HourTransform, MinuteTransform
 from .models import Tracker
 
 
