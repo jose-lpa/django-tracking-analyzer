@@ -5,7 +5,7 @@ Django Tracking Analyzer
 User actions tracking and analytics for Django sites
 
 .. image:: https://travis-ci.org/jose-lpa/django-tracking-analyzer.svg?branch=master
-    :target: https://travis-ci.org/maykinmedia/django-tracking-analyzer
+    :target: https://travis-ci.org/jose-lpa/django-tracking-analyzer
 
 .. image:: https://codecov.io/gh/jose-lpa/django-tracking-analyzer/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/jose-lpa/django-tracking-analyzer
