@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from geoip2.errors import GeoIP2Error
 
-from tracking_analyzer.compat.mock import patch
+from tracking_analyzer.compat import mock
 from tracking_analyzer.models import Tracker
 from .models import Post
 from .utils import build_mock_request
@@ -27,7 +27,7 @@ class TrackerTestCase(TestCase):
 
         self.request = build_mock_request('/testing/')
 
-    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    @mock.patch('django.contrib.gis.geoip2.GeoIP2.city')
     def test_create_from_request_manager(self, mock):
         """
         Tests the ``create_from_request`` method from the custom
@@ -79,7 +79,7 @@ class TrackerTestCase(TestCase):
             self.request, 'NOT_A_MODEL'
         )
 
-    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    @mock.patch('django.contrib.gis.geoip2.GeoIP2.city')
     def test_create_from_request_missing_geoip_data(self, mock):
         """
         If GeoIP data is not available, or the ``GeoIP2.city`` function fails,
@@ -101,7 +101,7 @@ class TrackerTestCase(TestCase):
         # And `GeoIP2` should have been never called.
         self.assertFalse(mock.called)
 
-    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    @mock.patch('django.contrib.gis.geoip2.GeoIP2.city')
     def test_create_from_request_django_geoip_exception(self, mock):
         """
         Tests Django ``contrib.gis.geoip2.GeoIP2Exception`` handling.
@@ -116,7 +116,7 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.ip_region, '')
         self.assertEqual(tracker.ip_city, '')
 
-    @patch('django.contrib.gis.geoip2.GeoIP2.city')
+    @mock.patch('django.contrib.gis.geoip2.GeoIP2.city')
     def test_create_from_request_geoip2_exception(self, mock):
         """
         Tests Django ``geoip2.GeoIP2Error`` handling.
