@@ -6,7 +6,7 @@ from django.db.models import Count
 
 from django_countries import countries
 
-from .compat import DateTimeDateTransform, HourTransform, MinuteTransform
+from .compat import get_requests_count
 from .models import Tracker
 
 
@@ -185,19 +185,15 @@ class TrackerAdmin(admin.ModelAdmin):
             current_pks = response.context_data['cl'].paginator.page(
                 current_page + 1).object_list.values_list('pk', flat=True)
 
-            current_results = Tracker.objects.filter(
-                pk__in=current_pks
-            ).annotate(
-                date=DateTimeDateTransform('timestamp'),
-                hour=HourTransform('timestamp'),
-                minute=MinuteTransform('timestamp')
-            ).values(
-                'date', 'hour', 'minute'
-            ).annotate(requests=Count('pk', 'date'))
+            current_results = get_requests_count(
+                Tracker.objects.filter(pk__in=current_pks))
 
             for item in current_results:
-                item['date'] = '{0}T{1:02d}:{2:02d}'.format(
-                    item.pop('date'), item.pop('hour'), item.pop('minute'))
+                item['date'] = '{date}T{hour:02d}:{minute:02d}'.format(
+                    date=item.pop('date'),
+                    hour=item.pop('hour'),
+                    minute=item.pop('minute')
+                )
 
             extra_context['requests_count'] = json.dumps(list(current_results))
 
