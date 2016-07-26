@@ -29,7 +29,7 @@ class PyTest(TestCommand):
 
 setup(
     name='django-tracking-analyzer',
-    version='0.1a4',
+    version='0.1b1',
     description='User actions tracking and analytics for Django sites.',
     author='José Luis Patiño Andrés',
     author_email='jose.lpa@gmail.com',
@@ -53,8 +53,9 @@ setup(
     ],
     cmdclass={'test': PyTest},
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Django :: 1.9',
+        'Framework :: Django :: 1.10',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: Unix',
@@ -63,6 +64,9 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Topic :: Software Development :: Libraries :: Application Frameworks'
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+        'Topic :: System :: Logging',
+        'Topic :: System :: Monitoring',
+        'Topic :: Utilities',
     ]
 )
