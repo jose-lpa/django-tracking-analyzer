@@ -23,6 +23,15 @@ class Command(BaseCommand):
                  ' Optional, probably better not to use it.'
         )
 
+    def user_input(self):
+        """
+        Helper method to handle user input when required.
+        """
+        if input('(y/n) ').lower() in ['y', 'yes']:
+            return True
+        else:
+            return False
+
     def install_dataset(self, geoip_dir, mm_url, mm_dataset):
         """
         Downloads the MaxMind Country dataset and unpacks it into the selected
@@ -122,7 +131,7 @@ class Command(BaseCommand):
                 'you want to reinstall it?'.format(geoip_dir)
             )
 
-            if input('(y/n) ').lower() in ['y', 'yes']:
+            if self.user_input() is True:
                 self.stdout.write('Updating MaxMind Country dataset...')
                 self.install_dataset(geoip_dir, mm_url=url, mm_dataset=ds)
             else:
