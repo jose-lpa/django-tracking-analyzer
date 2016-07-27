@@ -1,3 +1,5 @@
+import sys
+
 import django
 from django.db.models import Count
 
@@ -8,6 +10,22 @@ try:
 except ImportError:
     # Python 2
     import mock
+
+
+# User input in management command.
+try:
+    input = raw_input
+except NameError:
+    pass
+
+
+# `urlopen` function to download MaxMind datasets.
+if sys.version_info >= (3,):
+    # Python 3
+    from urllib.request import HTTPError, URLError, urlopen
+else:
+    # Python 2
+    from urllib2 import HTTPError, URLError, urlopen
 
 
 def get_requests_count(queryset):
