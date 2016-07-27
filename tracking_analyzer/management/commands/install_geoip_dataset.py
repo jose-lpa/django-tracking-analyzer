@@ -13,16 +13,12 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '-f', '--force', action='store_true', dest='force',
-            help="Force an install of the datasets even if it's not required."
-        )
-        parser.add_argument(
-            '--url', action='append',
+            '--url',
             help='Base URL where the MaxMind(R) Country dataset is available.'
                  ' Optional, probably better not to use it.'
         )
         parser.add_argument(
-            '--dataset', action='append',
+            '--dataset',
             help='Remote file name for the MaxMind(R) Country dataset.'
                  ' Optional, probably better not to use it.'
         )
@@ -98,23 +94,29 @@ class Command(BaseCommand):
             raise CommandError('`GEOIP_PATH` setting not present. Unable to '
                                'get the GeoIP dataset.')
 
-        # Check `TRACKING_ANALYZER_*` settings to retrieve dataset are ready.
-        try:
-            mm_url = getattr(settings, 'TRACKING_ANALYZER_MAXMIND_URL')
-        except AttributeError:
-            raise CommandError(
-                '`TRACKING_ANALYZER_MAXMIND_URL` setting not present. Unable '
-                'to get the GeoIP dataset.'
-            )
-        try:
-            mm_file = getattr(settings, 'TRACKING_ANALYZER_MAXMIND_DATABASE')
-        except AttributeError:
-            raise CommandError(
-                '`TRACKING_ANALYZER_MAXMIND_DATABASE` setting not present. '
-                'Unable to get the GeoIP dataset.'
-            )
+        url = options.get('url')
+        if not url:
+            # Check `TRACKING_ANALYZER_MAXMIND_URL` setting is ready.
+            try:
+                url = getattr(settings, 'TRACKING_ANALYZER_MAXMIND_URL')
+            except AttributeError:
+                raise CommandError(
+                    '`TRACKING_ANALYZER_MAXMIND_URL` setting not present. '
+                    'Unable to get the GeoIP dataset.'
+                )
 
-        if os.path.isfile(os.path.join(geoip_dir, 'GeoLite2-Country.mmdb')):
+        ds = options.get('dataset')
+        if not ds:
+            # Check `TRACKING_ANALYZER_MAXMIND_DATABASE` setting is ready.
+            try:
+                ds = getattr(settings, 'TRACKING_ANALYZER_MAXMIND_DATABASE')
+            except AttributeError:
+                raise CommandError(
+                    '`TRACKING_ANALYZER_MAXMIND_DATABASE` setting not present.'
+                    ' Unable to get the GeoIP dataset.'
+                )
+
+        if os.path.isfile(os.path.join(geoip_dir, os.path.splitext(ds)[0])):
             self.stdout.write(
                 'Seems that MaxMind dataset is already installed in "{0}". Do '
                 'you want to reinstall it?'.format(geoip_dir)
@@ -122,9 +124,9 @@ class Command(BaseCommand):
 
             if input('(y/n) ').lower() in ['y', 'yes']:
                 self.stdout.write('Updating MaxMind Country dataset...')
-                self.install_dataset(geoip_dir, mm_url, mm_file)
+                self.install_dataset(geoip_dir, mm_url=url, mm_dataset=ds)
             else:
                 self.stdout.write('Country dataset should be ready.')
         else:
             self.stdout.write('Installing MaxMind Country dataset...')
-            self.install_dataset(geoip_dir, mm_url, mm_file)
+            self.install_dataset(geoip_dir, mm_url=url, mm_dataset=ds)
