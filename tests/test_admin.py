@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.admin import AdminSite
 from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
@@ -213,15 +215,29 @@ class TrackerAdminTestCase(TestCase):
         request.user = self.user
 
         response = self.tracker_admin.changelist_view(request)
-        self.assertEqual(
-            response.context_data['devices_count'],
-            '[{{"count": 1, "device_type": "{0}"}}, '
-            '{{"count": 1, "device_type": "{1}"}}, '
-            '{{"count": 1, "device_type": "{2}"}}]'.format(
-                self.tracker_2.device_type,
-                self.tracker_1.device_type,
-                self.tracker_3.device_type,
-            )
+        data = json.loads(response.context_data['devices_count'])
+
+        self.assertEqual(len(data), 3)
+        self.assertIn(
+            {
+                "count": 1,
+                "device_type": self.tracker_1.device_type,
+            },
+            data
+        )
+        self.assertIn(
+            {
+                "count": 1,
+                "device_type": self.tracker_2.device_type,
+            },
+            data
+        )
+        self.assertIn(
+            {
+                "count": 1,
+                "device_type": self.tracker_3.device_type,
+            },
+            data
         )
 
     def test_changelist_view_context_devices_count_not_present(self):
@@ -255,13 +271,22 @@ class TrackerAdminTestCase(TestCase):
         request.user = self.user
 
         response = self.tracker_admin.changelist_view(request)
-        self.assertEqual(
-            response.context_data['requests_count'],
-            '[{{"date": "{0}", "requests": 2}}, '
-            '{{"date": "2016-07-26T23:10", "requests": 1}}]'.format(
-                self.tracker_1.timestamp.strftime('%Y-%m-%dT%H:%M'),
-                self.tracker_3.timestamp.strftime('%Y-%m-%dT%H:%M'),
-            )
+        data = json.loads(response.context_data['requests_count'])
+
+        self.assertEqual(len(data), 2)
+        self.assertIn(
+            {
+                "date": self.tracker_1.timestamp.strftime('%Y-%m-%dT%H:%M'),
+                "requests": 2
+            },
+            data
+        )
+        self.assertIn(
+            {
+                "date": self.tracker_3.timestamp.strftime('%Y-%m-%dT%H:%M'),
+                "requests": 1
+            },
+            data
         )
 
     def test_changelist_post_delete(self):
