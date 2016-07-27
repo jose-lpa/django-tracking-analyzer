@@ -303,3 +303,18 @@ class TrackerAdminTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(
+            self.url,
+            data={
+                '_selected_action': str(self.tracker_1.pk),
+                'action': 'delete_selected',
+                'post': 'yes'
+            },
+            follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        # `self.tracker_1` was actually deleted.
+        self.assertFalse(Tracker.objects.filter(pk=self.tracker_1.pk).exists())
