@@ -38,6 +38,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Django>=1.9',
+        'django-appconf',
         'django-countries',
         'django-ipware',
         'django-user-agents',
