@@ -12,18 +12,23 @@ from tracking_analyzer.compat import HTTPError, URLError, urlopen
 
 
 class Command(BaseCommand):
-    help = 'Installs/updates the MaxMind(R) Country dataset. Plase check ' \
+    help = 'Installs/updates the MaxMind(R) datasets. Plase check ' \
            'https://www.maxmind.com/ for more information.'
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--url',
-            help='Base URL where the MaxMind(R) Country dataset is available.'
+            help='Base URL where the MaxMind(R) datasets are available.'
                  ' Optional, probably better not to use it.'
         )
         parser.add_argument(
-            '--dataset',
+            '--countries',
             help='Remote file name for the MaxMind(R) Country dataset.'
+                 ' Optional, probably better not to use it.'
+        )
+        parser.add_argument(
+            '--cities',
+            help='Remote file name for the MaxMind(R) City dataset.'
                  ' Optional, probably better not to use it.'
         )
 
@@ -38,8 +43,8 @@ class Command(BaseCommand):
 
     def install_dataset(self, geoip_dir, mm_url, mm_dataset):
         """
-        Downloads the MaxMind Country dataset and unpacks it into the selected
-        Django project ``GEOIP_PATH`` directory.
+        Downloads the MaxMind datasets and unpacks it into the selected Django
+        project ``GEOIP_PATH`` directory.
 
         :param geoip_dir: The directory where the GeoIP datasets live, set in
         the ``GEOIP_PATH`` Django project setting.
@@ -99,6 +104,29 @@ class Command(BaseCommand):
                     )
                 )
 
+    def checkout_datasets(self, geoip_dir, url, datasets):
+        for dataset in datasets:
+            if os.path.isfile(os.path.join(
+                    geoip_dir, os.path.splitext(dataset)[0])):
+                self.stdout.write(
+                    '\nSeems that MaxMind dataset {0} is already installed in '
+                    '"{0}". Do you want to reinstall it?'.format(
+                        dataset, geoip_dir)
+                )
+
+                if self.user_input() is True:
+                    self.stdout.write(
+                        'Updating MaxMind {0} dataset...'.format(dataset))
+                    self.install_dataset(
+                        geoip_dir, mm_url=url, mm_dataset=dataset)
+                else:
+                    self.stdout.write(
+                        '{0} dataset should be ready.'.format(dataset))
+            else:
+                self.stdout.write(
+                    'Installing MaxMind {0} dataset...'.format(dataset))
+                self.install_dataset(geoip_dir, mm_url=url, mm_dataset=dataset)
+
     def handle(self, *args, **options):
         # Check `GEOIP_PATH` setting is ready.
         try:
@@ -118,28 +146,29 @@ class Command(BaseCommand):
                     'Unable to get the GeoIP dataset.'
                 )
 
-        ds = options.get('dataset')
-        if not ds:
-            # Check `TRACKING_ANALYZER_MAXMIND_DATABASE` setting is ready.
+        countries = options.get('countries')
+        if not countries:
+            # Check `TRACKING_ANALYZER_MAXMIND_COUNTRIES` setting is ready.
             try:
-                ds = getattr(settings, 'TRACKING_ANALYZER_MAXMIND_DATABASE')
+                countries = getattr(
+                    settings, 'TRACKING_ANALYZER_MAXMIND_COUNTRIES')
             except AttributeError:
                 raise CommandError(
-                    '`TRACKING_ANALYZER_MAXMIND_DATABASE` setting not present.'
-                    ' Unable to get the GeoIP dataset.'
+                    '`TRACKING_ANALYZER_MAXMIND_COUNTRIES` setting not '
+                    'present. Unable to get the GeoIP dataset.'
                 )
 
-        if os.path.isfile(os.path.join(geoip_dir, os.path.splitext(ds)[0])):
-            self.stdout.write(
-                'Seems that MaxMind dataset is already installed in "{0}". Do '
-                'you want to reinstall it?'.format(geoip_dir)
-            )
+        cities = options.get('cities')
+        if not cities:
+            # Check `TRACKING_ANALYZER_MAXMIND_CITIES` setting is ready.
+            try:
+                cities = getattr(
+                    settings, 'TRACKING_ANALYZER_MAXMIND_CITIES')
+            except AttributeError:
+                raise CommandError(
+                    '`TRACKING_ANALYZER_MAXMIND_CITIES` setting not '
+                    'present. Unable to get the GeoIP dataset.'
+                )
 
-            if self.user_input() is True:
-                self.stdout.write('Updating MaxMind Country dataset...')
-                self.install_dataset(geoip_dir, mm_url=url, mm_dataset=ds)
-            else:
-                self.stdout.write('Country dataset should be ready.')
-        else:
-            self.stdout.write('Installing MaxMind Country dataset...')
-            self.install_dataset(geoip_dir, mm_url=url, mm_dataset=ds)
+        self.checkout_datasets(geoip_dir, url, [countries, cities])
+
