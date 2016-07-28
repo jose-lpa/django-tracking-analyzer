@@ -33,13 +33,13 @@ Installation
     pip install django-tracking-analyzer
 
 
-2. Add ``'tracking_analyzer'`` entry to Django ``INSTALLED_APPS`` setting.
+2. Add ``'django_user_agents'`` and ``'tracking_analyzer'`` entries to Django ``INSTALLED_APPS`` setting.
 3. Run the migrations to load the ``Tracker`` model in your database::
 
     python manage.py migrate tracking_analyzer
 
 
-4. Install the MaxMind® GeoIP2 Country dataset. You can do this in two ways:
+4. Install the MaxMind® GeoIP2 datasets. You can do this in two ways:
     4.1. By running the provided management command for this::
 
         python manage.py install_geoip_dataset
