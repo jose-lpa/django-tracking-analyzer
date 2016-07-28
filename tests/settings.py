@@ -56,3 +56,7 @@ MIDDLEWARE_CLASSES = [
 # mocking the `GeoIP2.city()` method in the unit tests, so it's not necessary
 # to download and set up the MaxMind databases.
 GEOIP_PATH = 'tests'
+
+# Django Tracking Analyzer settings.
+TRACKING_ANALYZER_MAXMIND_URL = "http://geolite.maxmind.com/download/geoip/database/"
+TRACKING_ANALYZER_MAXMIND_DATABASE = "GeoLite2-Country.mmdb.gz"
