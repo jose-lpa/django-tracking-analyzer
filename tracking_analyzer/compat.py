@@ -49,7 +49,7 @@ def get_requests_count(queryset):
             minute=MinuteTransform('timestamp')
         ).values(
             'date', 'hour', 'minute'
-        ).annotate(requests=Count('pk', 'date')).order_by()
+        ).annotate(requests=Count('pk', 'date'))
     else:
         from django.db.models.functions import TruncDate, Extract
 
