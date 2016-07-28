@@ -28,9 +28,25 @@ Requirements
 Installation
 ============
 
-Install Django Tracking Analyzer from PyPI by using ``pip``::
+1. Install Django Tracking Analyzer from PyPI by using ``pip``::
 
     pip install django-tracking-analyzer
+
+
+2. Add ``'tracking_analyzer'`` entry to Django ``INSTALLED_APPS`` setting.
+3. Run the migrations to load the ``Tracker`` model in your database::
+
+    python manage.py migrate tracking_analyzer
+
+4. Install the MaxMind® GeoIP2 Country dataset. You can do this in two ways:
+    4.1. By running the provided management command for this::
+
+        python manage.py install_geoip_dataset
+
+
+    4.2. Or manually, by following the instructions in `GeoIP2 Django documentation`_.
+
+After following those steps, you should be ready to go.
 
 
 Contribution
@@ -79,6 +95,7 @@ Django Tracking Analyzer makes use of this technologies and apps, without which 
 .. _Django User Agents: https://pypi.python.org/pypi/django-user_agents
 .. _GeoIP2 2.3.0: https://pypi.python.org/pypi/geoip2
 .. _MaxMind GeoLite2 country datasets: http://dev.maxmind.com/geoip/geoip2/geolite2/
+.. _GeoIP2 Django documentation: https://docs.djangoproject.com/en/1.10/ref/contrib/gis/geoip2/
 .. _PEP-8: https://www.python.org/dev/peps/pep-0008/
 .. _Datamaps: https://github.com/markmarkoh/datamaps
 .. _TopoJSON: https://github.com/mbostock/topojson
