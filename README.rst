@@ -38,6 +38,7 @@ Installation
 
     python manage.py migrate tracking_analyzer
 
+
 4. Install the MaxMind® GeoIP2 Country dataset. You can do this in two ways:
     4.1. By running the provided management command for this::
 
@@ -47,6 +48,62 @@ Installation
     4.2. Or manually, by following the instructions in `GeoIP2 Django documentation`_.
 
 After following those steps, you should be ready to go.
+
+
+Explanation - Quickstart
+========================
+
+Django Tracking Analyzer is a Django application that aims to help you know in
+a simple and user-friendly way who the visitors of your site are, where they
+come from, what devices are they using to browse your site, what resources of
+your site they access, when and how many times.
+
+In order to do this, DTA implements a database model ``Tracker``, which will be
+created each time a user access certain resource, like a blog post, or performs
+certain action, like buying a product in your web shop.
+
+Then, using the Django admin interface, you can check the "Trackers" changelist
+in the "Django Tracking Analyzer" app admin, and you will see a changelist of
+all the user accesses with details about the requests, like the IP address, the
+country and city (if available), the device type, browser and system information.
+
+And also, heading the traditional changelist page, you will be provided with some
+nice interactive graphics made in D3.js, to actually see all the data gathered
+in a visual fancy way.
+
+Now let's see how can you start collecting users data. Imagine the most basic
+example: you have a web blog and you want to check the visits to your posts,
+having a resume of who accessed the posts, when and from where. In such a Django
+site, you might have a view ``PostDetailView``, where a blog post will be served
+by passing its slug in the URL. Something like this:
+
+.. code-block:: python
+
+    class PostDetailView(DetailView):
+        model = Post
+
+
+Okay, so you can track the users who access blog posts by their instances with
+DTA, just like this:
+
+.. code-block:: python
+
+    class PostDetailView(DetailView):
+        model = Post
+
+        def get_object(self, queryset=None):
+            # Retrieve the blog post just using `get_object` functionality.
+            obj = super(PostDetailView, self).get_object(queryset)
+
+            # Track the users access to the blog by post!
+            Tracker.objects.create_from_request(self.request, obj)
+
+            return obj
+
+
+And you are now on your way to collect users data! Now give it a time (or better
+access the resource yourself several times) and go check your Django admin in
+the "Django Tracking Analyzer" - "Trackers" section. Enjoy!
 
 
 Contribution
