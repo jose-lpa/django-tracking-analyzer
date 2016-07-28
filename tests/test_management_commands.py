@@ -37,7 +37,7 @@ class InstallGeoIPDatasetTestCase(TestCase):
         )
 
     @override_settings(TRACKING_ANALYZER_MAXMIND_DATABASE=None)
-    def test_handle_no_url_arg_no_url_setting(self):
+    def test_handle_no_dataset_arg_no_dataset_setting(self):
         """
         If the user doesn't provide a dataset file name to be downloaded, at
         least the ``TRACKING_ANALYZER_MAXMIND_DATABASE`` setting have to be
