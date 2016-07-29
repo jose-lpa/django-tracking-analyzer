@@ -40,12 +40,13 @@ Installation
 
 
 4. Install the MaxMind® GeoIP2 datasets. You can do this in two ways:
-    4.1. By running the provided management command for this::
+
+   4.1. By running the provided management command for this::
 
         python manage.py install_geoip_dataset
 
 
-    4.2. Or manually, by following the instructions in `GeoIP2 Django documentation`_.
+   4.2. Or manually, by following the instructions in `GeoIP2 Django documentation`_.
 
 After following those steps, you should be ready to go.
 
