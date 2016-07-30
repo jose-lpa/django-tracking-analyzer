@@ -54,23 +54,17 @@ After following those steps, you should be ready to go.
 Explanation - Quickstart
 ========================
 
-Django Tracking Analyzer is a Django application that aims to help you know in
-a simple and user-friendly way who the visitors of your site are, where they
-come from, what devices are they using to browse your site, what resources of
-your site they access, when and how many times.
+Django Tracking Analyzer is a Django pluggable application which helps you
+providing usage statistics and visitors data for your Django sites.
 
-In order to do this, DTA implements a database model ``Tracker``, which will be
-created each time a user access certain resource, like a blog post, or performs
-certain action, like buying a product in your web shop.
+DTA does this by recording requests data in those places you want to by saving
+``Tracker``'s. A ``Tracker`` is a Django database model which holds all the
+data related to a request, including geolocation via IP address and device or
+browser specifications.
 
-Then, using the Django admin interface, you can check the "Trackers" changelist
-in the "Django Tracking Analyzer" app admin, and you will see a changelist of
-all the user accesses with details about the requests, like the IP address, the
-country and city (if available), the device type, browser and system information.
+When some data is collected, the Django admin interface for ``Tracker`` model
+implements some interactive widgets to help you visualize better the data.
 
-And also, heading the traditional changelist page, you will be provided with some
-nice interactive graphics made in D3.js, to actually see all the data gathered
-in a visual fancy way.
 
 Now let's see how can you start collecting users data. Imagine the most basic
 example: you have a web blog and you want to check the visits to your posts,
