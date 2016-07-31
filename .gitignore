@@ -36,3 +36,8 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Documentation builds
+docs/_build
+docs/_static
+docs/_templates
