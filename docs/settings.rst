@@ -16,7 +16,7 @@ Although this is not a Django Tracking Analyzer setting, you have to set it up
 in order to get the GeoIP datasets working properly. Please check `GeoIP2 Django documentation`_
 for detailed information.
 
-- Default: 'xxxxx'
+- Default: **unset**
 
 ``TRACKING_ANALYZER_MAXMIND_URL``
 ---------------------------------

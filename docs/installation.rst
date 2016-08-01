@@ -4,6 +4,7 @@
 Installation
 ============
 
+
 Prerequisites
 =============
 
@@ -14,6 +15,7 @@ The next requirements will be installed together with Django Tracking Analyzer:
 - Django IPWare 1.1.5 or later.
 - Django User Agents 0.3.0 or later.
 - GeoIP2 2.3.0 or later.
+
 
 Package installation
 ====================
@@ -36,6 +38,7 @@ Python ways:
    cd django-tracking-analyzer-master/
    python setup.py install
 
+
 Configuration
 =============
 
@@ -45,6 +48,7 @@ Once the package is installed, the next two entries have to be added to the
 - ``'django_user_agents'`` (enables all the functionalities needed to get user
   agent data)
 - ``'tracking_analyzer'``
+
 
 MaxMind® GeoLite2 datasets installation
 =======================================
@@ -64,6 +68,42 @@ can do in two different ways:
 2. Manually, by downloading yourself the datasets from the MaxMind® `GeoLite2 site`_.
 
 Once this last step is done, you should be ready to use Django Tracking Analyzer.
+
+
+``install_geoip_dataset`` management command
+--------------------------------------------
+
+The management command ``install_geoip_dataset`` is available to help you
+download and install the MaxMind GeoLite2 datasets without any effort.
+
+The only thing you have to make is to ensure the existence of the Django setting
+``GEOIP_PATH``. This setting specifies the directory where the GeoIP data files
+are located. It is unset by default, you have to set it to a directory where you
+want the datasets to be installed. A nice place is usually the root directory of
+your project code.
+
+Once you have this setting, you can execute the management command and, if you
+don't have any GeoLite2 files in that directory, it will download and decompress
+the GeoLite2 "City" and "Country" datasets for you::
+
+    python manage.py install_geoip_dataset
+
+In case you already have the datasets installed, the command will ask you if you
+really want to download another datasets and replace the existing ones with the
+latest downloaded version::
+
+    Seems that MaxMind dataset GeoLite2-Country.mmdb.gz is already installed in "GeoLite2-Country.mmdb.gz". Do you want to reinstall it?
+    (y/n)
+
+The process will run for both the "Country" and the "City" datasets.
+
+Although the management command will everything you need in a simlpe run, you
+might want to specify some different download options, such the datasets files
+names or the download URL. You can do this via the next command parameters:
+
+- ``url``: Base URL where the MaxMind(R) datasets are available.
+- ``countries``: Remote file name for the MaxMind(R) Country dataset (compressed).
+- ``cities``: Remote file name for the MaxMind(R) City dataset (compressed).
 
 
 .. _GeoLite2 site: http://dev.maxmind.com/geoip/geoip2/geolite2/
