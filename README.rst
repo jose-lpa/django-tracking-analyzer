@@ -13,6 +13,9 @@ User actions tracking and analytics for Django sites
 .. image:: https://badge.fury.io/py/django-tracking-analyzer.svg
     :target: https://badge.fury.io/py/django-tracking-analyzer
 
+.. image:: https://readthedocs.org/projects/django-tracking-analyzer/badge/?version=latest
+    :target: http://django-tracking-analyzer.readthedocs.io/en/latest/?badge=latest
+
 
 Requirements
 ============
@@ -101,6 +104,12 @@ access the resource yourself several times) and go check your Django admin in
 the "Django Tracking Analyzer" - "Trackers" section. Enjoy!
 
 
+Documentation
+=============
+
+For extensive documentation and usage explanations, you can check `Read the Docs`_.
+
+
 Acknowledgements
 ================
 
@@ -123,7 +132,7 @@ Django Tracking Analyzer makes use of this technologies and apps, without which 
 .. _GeoIP2 2.3.0: https://pypi.python.org/pypi/geoip2
 .. _MaxMind GeoLite2 country datasets: http://dev.maxmind.com/geoip/geoip2/geolite2/
 .. _GeoIP2 Django documentation: https://docs.djangoproject.com/en/1.10/ref/contrib/gis/geoip2/
-.. _PEP-8: https://www.python.org/dev/peps/pep-0008/
+.. _Read the Docs: http://django-tracking-analyzer.readthedocs.io/en/latest/
 .. _Datamaps: https://github.com/markmarkoh/datamaps
 .. _TopoJSON: https://github.com/mbostock/topojson
 .. _D3 bar chart w/tooltips: http://bl.ocks.org/Caged/6476579
