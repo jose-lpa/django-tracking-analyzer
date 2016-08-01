@@ -19,39 +19,14 @@ Django Tracking Analyzer's documentation
     :target: https://badge.fury.io/py/django-tracking-analyzer
 
 
-Overview
+Contents
 ========
-
-Django Tracking Analyzer is a Django application that aims to help you know in
-a simple and user-friendly way who the visitors of your site are, where they
-come from, what devices are they using to browse your site, what resources of
-your site they access, when and how many times.
-
-In order to do this, DTA implements a database model ``Tracker``, which will be
-created each time a user access certain resource, like a blog post, or performs
-certain action, like buying a product in your web shop.
-
-Then, using the Django admin interface, you can check the "Trackers" changelist
-in the "Django Tracking Analyzer" app admin, and you will see a changelist of
-all the user accesses with details about the requests, like the IP address, the
-country and city (if available), the device type, browser and system information.
-
-And also, heading the traditional changelist page, you will be provided with some
-nice interactive graphics made in D3.js, to actually see all the data gathered
-in a visual fancy way.
-
-===========================
-INSERT DASHBOARD IMAGE HERE
-===========================
-
-
-Contents:
 
 .. toctree::
    :maxdepth: 2
 
    installation
-   usage (INCLUDE SOME SCREENSHOTS OF THE DJANGO ADMIN).
+   usage
    settings
    contributing
 
@@ -59,7 +34,13 @@ Contents:
 License
 =======
 
-Licensed under the `GNU GPLv3`_ license.
+Django Tracking Analyzer is licensed under the `GNU GPLv3`_ license. This makes
+you able to modify and redistribute the code of this package freely, as well as
+to use it in your own Django sites or applications publicly.
+
+The related software included in this package, such as D3.js or some code for
+the Javascript widgets, have its own licenses. In case you want to modify and
+use that software for your own purposes, please refer to their own licenses.
 
 
 Source code and contributions
