@@ -230,21 +230,3 @@ class InstallGeoIPDatasetTestCase(TestCase):
             'Unable to download MaxMind dataset.',
             call_command, 'install_geoip_dataset'
         )
-
-    # @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.urlopen')
-    # def test_decompressing_datasets(self, urlopen_mock):
-    #     """
-    #     ``install_dataset`` method is able to handle ``URLError`` exceptions.
-    #     """
-    #     mocked_dataset = os.path.join(
-    #         settings.TESTING_DIR, 'files', 'dummy_dataset.mmdb.gz')
-    #     mocked_response = mock.MagicMock()
-    #
-    #     with open(mocked_dataset, 'rb') as dataset:
-    #         mocked_response.info().get_all.return_value = ['1024']
-    #         mocked_response.info().getheaders.return_value = ['1024']
-    #         mocked_response.read.return_value = dataset.read()
-    #
-    #         urlopen_mock.return_value = mocked_response
-    #
-    #         call_command('install_geoip_dataset')
