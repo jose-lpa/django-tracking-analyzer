@@ -62,6 +62,34 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.object_id, self.post.pk)
         self.assertEqual(tracker.user, self.request.user)
 
+    @mock.patch('django.contrib.gis.geoip2.GeoIP2.city')
+    def test_create_from_request_manager_null_data(self, mock):
+        """
+        Tests the ``create_from_request`` method from the custom
+        ``TrackerManager`` when geo-location data is ``None``.
+        """
+        # Mock the response from `GeoIP2.city()` method.
+        mock.return_value = {
+            'country_code': None,
+            'region': None,
+            'city': None
+        }
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.browser, 'Chrome')
+        self.assertEqual(tracker.browser_version, '49.0.2623')
+        self.assertEqual(tracker.device, 'Other')
+        self.assertEqual(tracker.device_type, Tracker.PC)
+        self.assertEqual(tracker.system, 'Mac OS X')
+        self.assertEqual(tracker.system_version, '10.10.5')
+        self.assertEqual(tracker.ip_address, '208.67.222.222')
+        self.assertEqual(tracker.ip_country, '')
+        self.assertEqual(tracker.ip_region, '')
+        self.assertEqual(tracker.ip_city, '')
+        self.assertEqual(tracker.object_id, self.post.pk)
+        self.assertEqual(tracker.user, self.request.user)
+
     def test_create_from_request_manager_wrong_request(self):
         """
         Tests sanity checks for ``HTTPRequest`` object in the custom manager
