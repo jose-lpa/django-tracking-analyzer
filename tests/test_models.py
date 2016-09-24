@@ -4,10 +4,17 @@ from django.test import TestCase
 
 from geoip2.errors import GeoIP2Error
 
-from tracking_analyzer.compat import mock
 from tracking_analyzer.models import Tracker
 from .models import Post
 from .utils import build_mock_request
+
+# Mock facility for unit testing.
+try:
+    # Python 3
+    import unittest.mock as mock
+except ImportError:
+    # Python 2
+    import mock
 
 
 class TrackerTestCase(TestCase):

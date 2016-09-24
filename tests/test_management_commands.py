@@ -1,10 +1,16 @@
-import os
-
 from django.conf import settings
 from django.core.management import call_command, CommandError
 from django.test import override_settings, TestCase
 
-from tracking_analyzer.compat import HTTPError, mock, URLError
+from tracking_analyzer.compat import HTTPError, URLError
+
+# Mock facility for unit testing.
+try:
+    # Python 3
+    import unittest.mock as mock
+except ImportError:
+    # Python 2
+    import mock
 
 
 class InstallGeoIPDatasetTestCase(TestCase):
