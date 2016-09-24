@@ -65,9 +65,9 @@ class TrackerManager(models.Manager):
         tracker = self.model.objects.create(
             content_object=content_object,
             ip_address=ip_address,
-            ip_country=city.get('country_code', ''),
-            ip_region=city.get('region', ''),
-            ip_city=city.get('city', ''),
+            ip_country=city.get('country_code', '') or '',
+            ip_region=city.get('region', '') or '',
+            ip_city=city.get('city', '') or '',
             referrer=request.META.get('HTTP_REFERER', ''),
             device_type=device_type,
             device=request.user_agent.device.family,

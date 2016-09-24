@@ -3,14 +3,6 @@ import sys
 import django
 from django.db.models import Count
 
-# Mock facility for unit testing.
-try:
-    # Python 3
-    import unittest.mock as mock
-except ImportError:
-    # Python 2
-    import mock
-
 
 # User input in management command.
 try:
