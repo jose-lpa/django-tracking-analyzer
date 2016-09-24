@@ -29,11 +29,12 @@ class PyTest(TestCommand):
 
 setup(
     name='django-tracking-analyzer',
-    version='0.1',
+    version='0.2',
     description='User actions tracking and analytics for Django sites.',
     author='José Luis Patiño Andrés',
     author_email='jose.lpa@gmail.com',
     url='https://github.com/jose-lpa/django-tracking-analyzer',
+    keywords=['django', 'analytics', 'web', 'monitoring', 'logging'],
     packages=find_packages(exclude=['tests*']),
     include_package_data=True,
     install_requires=[
