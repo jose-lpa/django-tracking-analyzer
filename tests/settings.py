@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = [
 GEOIP_PATH = TESTING_DIR
 
 # Django Tracking Analyzer settings.
-TRACKING_ANALYZER_MAXMIND_URL = "http://geolite.maxmind.com/download/geoip/database/"
+TRACKING_ANALYZER_MAXMIND_URL = \
+    "http://geolite.maxmind.com/download/geoip/database/"
 TRACKING_ANALYZER_MAXMIND_COUNTRIES = "GeoLite2-Country.mmdb.gz"
 TRACKING_ANALYZER_MAXMIND_CITIES = "GeoLite2-City.mmdb.gz"

@@ -298,7 +298,7 @@ class TrackerAdminTestCase(TestCase):
             self.url,
             data={
                 '_selected_action': str(self.tracker_1.pk),
-                'action': 'delete_selected' # Add 'post': 'yes' later.
+                'action': 'delete_selected'  # Add 'post': 'yes' later.
             }
         )
 
