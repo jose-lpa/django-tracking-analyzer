@@ -13,7 +13,6 @@ class UserFactory(factory.DjangoModelFactory):
     username = factory.Sequence(lambda n: 'user_{0}'.format(n))
     email = factory.Sequence(lambda n: 'user_{0}@maykinmedia.nl'.format(n))
     password = factory.PostGenerationMethodCall('set_password', 'testing')
-    # test --pytest-args "--cov-report xml --cov tracking_analyzer tests/ --cov-config .coveragerc --junit-xml=junit.xml --color=yes --pylint --pylint-rcfile=pylint.rc"
 
     class Meta:
         model = 'auth.User'

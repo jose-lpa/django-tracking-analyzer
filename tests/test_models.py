@@ -165,3 +165,72 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.ip_country, '')
         self.assertEqual(tracker.ip_region, '')
         self.assertEqual(tracker.ip_city, '')
+
+    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    def test_create_from_request_is_pc(self, agent_mock):
+        """
+        Tests the ``create_from_request`` method when the requesting device is
+        a PC.
+        """
+        agent_mock.return_value = True
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.device_type, Tracker.PC)
+
+    @mock.patch('user_agents.parsers.UserAgent.is_mobile', new_callable=mock.PropertyMock)
+    def test_create_from_request_is_mobile(self, agent_mock):
+        """
+        Tests the ``create_from_request`` method when the requesting device is
+        a mobile device.
+        """
+        agent_mock.return_value = True
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.device_type, Tracker.MOBILE)
+
+    @mock.patch('user_agents.parsers.UserAgent.is_tablet', new_callable=mock.PropertyMock)
+    def test_create_from_request_is_tablet(self, agent_mock):
+        """
+        Tests the ``create_from_request`` method when the requesting device is
+        a tablet device.
+        """
+        agent_mock.return_value = True
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.device_type, Tracker.TABLET)
+
+    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    @mock.patch('user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
+    def test_create_from_request_is_bot(self, bot_mock, pc_mock):
+        """
+        Tests the ``create_from_request`` method when the requesting device is
+        a spider bot.
+        """
+        bot_mock.return_value = True
+        pc_mock.return_value = False
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.device_type, Tracker.BOT)
+
+    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    @mock.patch('user_agents.parsers.UserAgent.is_mobile', new_callable=mock.PropertyMock)
+    @mock.patch('user_agents.parsers.UserAgent.is_tablet', new_callable=mock.PropertyMock)
+    @mock.patch('user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
+    def test_create_from_request_is_unknown(
+            self, bot_mock, tablet_mock, mobile_mock, pc_mock):
+        """
+        Tests the ``create_from_request`` method when the requesting device is
+        an unknown device.
+        """
+        bot_mock.return_value = False
+        tablet_mock.return_value = False
+        mobile_mock.return_value = False
+        pc_mock.return_value = False
+
+        tracker = Tracker.objects.create_from_request(self.request, self.post)
+
+        self.assertEqual(tracker.device_type, Tracker.UNKNOWN)
