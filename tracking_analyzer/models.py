@@ -30,7 +30,7 @@ class Tracker(models.Model):
         (UNKNOWN, 'Unknown'),
     )
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -46,7 +46,7 @@ class Tracker(models.Model):
     browser_version = models.CharField(max_length=30, blank=True)
     system = models.CharField(max_length=30, blank=True)
     system_version = models.CharField(max_length=30, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
 
     objects = TrackerManager()
 
