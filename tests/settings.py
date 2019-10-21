@@ -43,6 +43,14 @@ TEMPLATES = [
     },
 ]
 
+STATIC_ROOT = os.path.join(TESTING_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = []
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+)
+
 MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
