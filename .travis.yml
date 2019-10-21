@@ -18,12 +18,10 @@ after_success:
   - codecov
 
 env:
-  - TOXENV=py35-django2.1
-  - TOXENV=py36-django2.1
-  - TOXENV=py37-django2.1
-  - TOXENV=py38-django2.1
+  - TOXENV=py36-django21
+  - TOXENV=py37-django21
+  - TOXENV=py38-django21
 
-  - TOXENV=py35-django2.2
-  - TOXENV=py36-django2.2
-  - TOXENV=py37-django2.2
-  - TOXENV=py38-django2.2
+  - TOXENV=py36-django22
+  - TOXENV=py37-django22
+  - TOXENV=py38-django22
