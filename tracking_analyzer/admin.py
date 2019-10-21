@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from django_countries import countries
 
-from .compat import get_requests_count
+from .utils import get_requests_count
 from .models import Tracker
 
 

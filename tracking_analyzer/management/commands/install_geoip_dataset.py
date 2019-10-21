@@ -1,14 +1,11 @@
-from __future__ import (
-    division, absolute_import, print_function, unicode_literals
-)
-
 import os
 import gzip
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from tracking_analyzer.compat import HTTPError, URLError, urlopen
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen
 
 
 class Command(BaseCommand):
