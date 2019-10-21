@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     slug = models.SlugField()
     body = models.TextField()
