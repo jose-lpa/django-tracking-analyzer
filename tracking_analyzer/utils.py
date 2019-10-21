@@ -4,8 +4,6 @@ from django.db.models.functions import TruncDate, Extract
 
 def get_requests_count(queryset):
     """
-    Major changes in DB lookup transforms between Django 1.9 and Django 1.10.
-
     This function returns a list of dictionaries containing each one the
     requests count per minute of a certain ``Tracker``s queryset.
 
@@ -18,4 +16,4 @@ def get_requests_count(queryset):
         minute=Extract('timestamp', 'minute')
     ).values(
         'date', 'hour', 'minute'
-    ).annotate(requests=Count('pk', 'date'))
+    ).annotate(requests=Count('pk'))
