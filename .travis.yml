@@ -6,7 +6,7 @@ services:
   - postgresql
 
 addons:
-  postgresql: "9.4"
+  postgresql: "10.10"
 
 install:
   - pip install codecov tox
@@ -18,10 +18,12 @@ after_success:
   - codecov
 
 env:
-  - TOXENV=py27-django19
-  - TOXENV=py34-django19
-  - TOXENV=py35-django19
+  - TOXENV=py35-django2.1
+  - TOXENV=py36-django2.1
+  - TOXENV=py37-django2.1
+  - TOXENV=py38-django2.1
 
-  - TOXENV=py27-django110
-  - TOXENV=py34-django110
-  - TOXENV=py35-django110
+  - TOXENV=py35-django2.2
+  - TOXENV=py36-django2.2
+  - TOXENV=py37-django2.2
+  - TOXENV=py38-django2.2
