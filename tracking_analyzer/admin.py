@@ -2,11 +2,7 @@ import json
 
 from django.contrib import admin
 from django.db.models import Count
-
-try:
-    from django.core.urlresolvers import reverse
-except ImportError:
-    from django.urls import reverse
+from django.urls import reverse
 
 from django_countries import countries
 

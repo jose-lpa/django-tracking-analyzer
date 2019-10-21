@@ -1,8 +1,8 @@
 import json
 
 from django.contrib.admin import AdminSite
-from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 from django.utils import timezone
 
 from django_countries import countries
