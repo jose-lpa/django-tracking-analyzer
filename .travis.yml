@@ -8,6 +8,10 @@ dist: bionic
 
 addons:
   postgresql: "10.10"
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
 
 install:
   - pip install codecov tox
