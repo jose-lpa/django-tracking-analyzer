@@ -1,4 +1,5 @@
 # Development.
+.idea/
 *.pyc
 .python-version
 .*.swp
