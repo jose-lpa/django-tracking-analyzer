@@ -13,6 +13,9 @@ addons:
 install:
   - pip install codecov tox
 
+before_script:
+  - psql -c 'CREATE DATABASE tracking_analyzer_test;' -U postgres
+
 script:
   - tox --
 

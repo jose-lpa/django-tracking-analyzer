@@ -4,7 +4,7 @@ from .settings import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
+        'NAME': 'tracking_analyzer_test',
         'USERNAME': 'postgres',
         'PASSWORD': '',
     }
