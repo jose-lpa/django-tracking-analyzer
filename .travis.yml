@@ -17,6 +17,9 @@ install:
   - pip install codecov tox
 
 before_script:
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start 10.10
+  - sudo apt-get --purge remove -y postgresql-9.3 postgresql-client-9.3
   - psql -c 'CREATE DATABASE tracking_analyzer_test;' -U postgres
 
 script:
