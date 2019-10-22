@@ -20,11 +20,11 @@ User actions tracking and analytics for Django sites
 Requirements
 ============
 
-- Django 1.9 or later.
-- `Django Countries`_ 3.4.1 or later.
-- `Django IPWare`_ 1.1.5 or later.
-- `Django User Agents`_ 0.3.0 or later.
-- `GeoIP2 2.3.0`_ or later.
+- Django 2.1 or later.
+- `Django Countries`_ 5.5 or later.
+- `Django IPWare`_ 2.1.0 or later.
+- `Django User Agents`_ 0.4.0 or later.
+- `GeoIP2`_ 2.9.0 or later.
 - `MaxMind GeoLite2 country datasets`_.
 
 
@@ -129,7 +129,7 @@ Django Tracking Analyzer makes use of this technologies and apps, without which 
 .. _Django Countries: https://pypi.python.org/pypi/django-countries
 .. _Django IPWare: https://pypi.python.org/pypi/django-ipware
 .. _Django User Agents: https://pypi.python.org/pypi/django-user_agents
-.. _GeoIP2 2.3.0: https://pypi.python.org/pypi/geoip2
+.. _GeoIP2: https://pypi.python.org/pypi/geoip2
 .. _MaxMind GeoLite2 country datasets: http://dev.maxmind.com/geoip/geoip2/geolite2/
 .. _GeoIP2 Django documentation: https://docs.djangoproject.com/en/1.10/ref/contrib/gis/geoip2/
 .. _Read the Docs: http://django-tracking-analyzer.readthedocs.io/en/latest/

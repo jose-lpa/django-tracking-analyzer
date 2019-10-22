@@ -10,11 +10,11 @@ Prerequisites
 
 The next requirements will be installed together with Django Tracking Analyzer:
 
-- Django +1.9 or later.
-- Django Countries 3.4.1 or later.
-- Django IPWare 1.1.5 or later.
-- Django User Agents 0.3.0 or later.
-- GeoIP2 2.3.0 or later.
+- Django 2.1 or later.
+- Django Countries 5.5 or later.
+- Django IPWare 2.1.0 or later.
+- Django User Agents 0.4.0 or later.
+- GeoIP2 2.9.0 or later.
 
 
 Package installation
@@ -45,7 +45,7 @@ Configuration
 Once the package is installed, the next two entries have to be added to the
 ``INSTALLED_APPS`` setting:
 
-- ``'django_user_agents'`` (enables all the functionalities needed to get user
+- ``'django_user_agents'`` (enables all the functionality needed to get user
   agent data)
 - ``'tracking_analyzer'``
 
