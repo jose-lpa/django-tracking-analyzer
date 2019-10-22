@@ -1,4 +1,4 @@
-from django.conf import settings  # noqa
+from django.conf import settings  # pylint: disable=unused-import
 
 from appconf import AppConf
 

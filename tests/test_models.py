@@ -161,7 +161,8 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.ip_city, '')
 
     @mock.patch('tracking_analyzer.manager.GeoIP2')
-    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
     def test_create_from_request_is_pc(self, agent_mock, geoip2_mock):
         """
         Tests the ``create_from_request`` method when the requesting device is
@@ -180,7 +181,9 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.device_type, Tracker.PC)
 
     @mock.patch('tracking_analyzer.manager.GeoIP2')
-    @mock.patch('user_agents.parsers.UserAgent.is_mobile', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_mobile',
+        new_callable=mock.PropertyMock)
     def test_create_from_request_is_mobile(self, agent_mock, geoip2_mock):
         """
         Tests the ``create_from_request`` method when the requesting device is
@@ -199,7 +202,9 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.device_type, Tracker.MOBILE)
 
     @mock.patch('tracking_analyzer.manager.GeoIP2')
-    @mock.patch('user_agents.parsers.UserAgent.is_tablet', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_tablet',
+        new_callable=mock.PropertyMock)
     def test_create_from_request_is_tablet(self, agent_mock, geoip2_mock):
         """
         Tests the ``create_from_request`` method when the requesting device is
@@ -218,8 +223,10 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.device_type, Tracker.TABLET)
 
     @mock.patch('tracking_analyzer.manager.GeoIP2')
-    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
-    @mock.patch('user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
     def test_create_from_request_is_bot(self, bot_mock, pc_mock, geoip2_mock):
         """
         Tests the ``create_from_request`` method when the requesting device is
@@ -239,12 +246,19 @@ class TrackerTestCase(TestCase):
         self.assertEqual(tracker.device_type, Tracker.BOT)
 
     @mock.patch('tracking_analyzer.manager.GeoIP2')
-    @mock.patch('user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
-    @mock.patch('user_agents.parsers.UserAgent.is_mobile', new_callable=mock.PropertyMock)
-    @mock.patch('user_agents.parsers.UserAgent.is_tablet', new_callable=mock.PropertyMock)
-    @mock.patch('user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_pc', new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_mobile',
+        new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_tablet',
+        new_callable=mock.PropertyMock)
+    @mock.patch(
+        'user_agents.parsers.UserAgent.is_bot', new_callable=mock.PropertyMock)
     def test_create_from_request_is_unknown(
-            self, bot_mock, tablet_mock, mobile_mock, pc_mock, geoip2_mock):
+        self, bot_mock, tablet_mock, mobile_mock, pc_mock, geoip2_mock
+    ):
         """
         Tests the ``create_from_request`` method when the requesting device is
         an unknown device.

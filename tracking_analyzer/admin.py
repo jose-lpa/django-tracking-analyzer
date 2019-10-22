@@ -49,14 +49,15 @@ class TrackerAdmin(admin.ModelAdmin):
         """
         Define the 'Content Object' column rows display.
         """
-        return '<a href="{0}?' \
-               'content_type__id__exact={1}' \
-               '&object_id__exact={2}">{3}</a>'.format(
-                    reverse('admin:tracking_analyzer_tracker_changelist'),
-                    obj.content_type.id,
-                    obj.object_id,
-                    obj
-               )
+        return (
+            '<a href="{0}?content_type__id__exact={1}&object_id__exact={2}">'
+            '{3}</a>'.format(
+                reverse('admin:tracking_analyzer_tracker_changelist'),
+                obj.content_type.id,
+                obj.object_id,
+                obj
+            )
+        )
 
     content_object_link.allow_tags = True
     content_object_link.short_description = 'Content object'
@@ -70,8 +71,8 @@ class TrackerAdmin(admin.ModelAdmin):
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.ip_address,
             )
-        else:
-            return '-'
+
+        return '-'
 
     ip_address_link.allow_tags = True
     ip_address_link.short_description = 'IP Address'
@@ -86,8 +87,8 @@ class TrackerAdmin(admin.ModelAdmin):
                 obj.ip_country,
                 obj.ip_country.name
             )
-        else:
-            return '-'
+
+        return '-'
 
     ip_country_link.allow_tags = True
     ip_country_link.short_description = 'IP Country'
@@ -101,8 +102,8 @@ class TrackerAdmin(admin.ModelAdmin):
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.ip_city,
             )
-        else:
-            return '-'
+
+        return '-'
 
     ip_city_link.allow_tags = True
     ip_city_link.short_description = 'IP City'
@@ -117,8 +118,8 @@ class TrackerAdmin(admin.ModelAdmin):
                 obj.user.pk,
                 obj.user
             )
-        else:
-            return 'Anonymous'
+
+        return 'Anonymous'
 
     user_link.allow_tags = True
     user_link.short_description = 'User'
@@ -169,7 +170,9 @@ class TrackerAdmin(admin.ModelAdmin):
                     trackers=Count('id')).order_by()
                 for track in trackers:
                     countries_count.append(
-                        [countries.alpha3(track['ip_country']), track['trackers']])
+                        [countries.alpha3(track['ip_country']),
+                         track['trackers']]
+                    )
 
                 extra_context['countries_count'] = json.dumps(countries_count)
 

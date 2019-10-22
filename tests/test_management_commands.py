@@ -1,10 +1,9 @@
 import unittest.mock as mock
+from urllib.error import HTTPError, URLError
 
 from django.conf import settings
 from django.core.management import call_command, CommandError
 from django.test import override_settings, TestCase
-
-from urllib.error import HTTPError, URLError
 
 
 class InstallGeoIPDatasetTestCase(TestCase):
@@ -54,7 +53,9 @@ class InstallGeoIPDatasetTestCase(TestCase):
         )
 
     @override_settings(TRACKING_ANALYZER_MAXMIND_URL=None)
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
     def test_handle_no_url_setting_manual_target(self, install_mock):
         """
         If the base URL is not available, the user should still be able to
@@ -80,7 +81,9 @@ class InstallGeoIPDatasetTestCase(TestCase):
         install_mock.assert_has_calls(calls)
 
     @override_settings(TRACKING_ANALYZER_MAXMIND_COUNTRIES=None)
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
     def test_handle_no_countries_setting_manual_target(self, install_mock):
         """
         If the countries file name is not available, the user should still be
@@ -106,7 +109,9 @@ class InstallGeoIPDatasetTestCase(TestCase):
         install_mock.assert_has_calls(calls)
 
     @override_settings(TRACKING_ANALYZER_MAXMIND_CITIES=None)
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
     def test_a_handle_no_cities_setting_manual_target(self, install_mock):
         """
         If the cities file name is not available, the user should still be
@@ -131,7 +136,9 @@ class InstallGeoIPDatasetTestCase(TestCase):
 
         install_mock.assert_has_calls(calls)
 
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
     def test_handle_straight_run_no_user_input_needed(self, install_mock):
         """
         Test the management command in a straight situation where the system
@@ -154,10 +161,17 @@ class InstallGeoIPDatasetTestCase(TestCase):
 
         install_mock.assert_has_calls(calls)
 
-    @mock.patch('os.path.isfile')
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.user_input')
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
-    def test_handle_existing_datasets_user_action_required_no(self, mock_command, mock_input, mock_isfile):
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.isfile')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'user_input')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
+    def test_handle_existing_datasets_user_action_required_no(
+        self, mock_command, mock_input, mock_isfile
+    ):
         """
         Test the command running in a situation where there is an existent
         dataset already installed and the user responds "NO" when asked to
@@ -170,10 +184,17 @@ class InstallGeoIPDatasetTestCase(TestCase):
 
         self.assertFalse(mock_command.called)
 
-    @mock.patch('os.path.isfile')
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.user_input')
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.Command.install_dataset')
-    def test_handle_existing_countries_user_action_required_yes(self, mock_command, mock_input, mock_isfile):
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.isfile')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'user_input')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.Command.'
+        'install_dataset')
+    def test_handle_existing_countries_user_action_required_yes(
+        self, mock_command, mock_input, mock_isfile
+    ):
         """
         Test the command running in a situation where there is an existent
         dataset already installed and the user responds "YES" when asked to
@@ -199,7 +220,8 @@ class InstallGeoIPDatasetTestCase(TestCase):
 
         mock_command.assert_has_calls(calls)
 
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.urlopen')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.urlopen')
     def test_install_dataset_urlopen_http_error(self, urlopen_mock):
         """
         ``install_dataset`` method is able to handle ``HTTPError`` exceptions.
@@ -218,7 +240,8 @@ class InstallGeoIPDatasetTestCase(TestCase):
             call_command, 'install_geoip_dataset'
         )
 
-    @mock.patch('tracking_analyzer.management.commands.install_geoip_dataset.urlopen')
+    @mock.patch(
+        'tracking_analyzer.management.commands.install_geoip_dataset.urlopen')
     def test_install_dataset_urlopen_url_error(self, urlopen_mock):
         """
         ``install_dataset`` method is able to handle ``URLError`` exceptions.

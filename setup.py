@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
 import sys
 
 from setuptools import setup, find_packages
@@ -50,7 +48,7 @@ setup(
         'factory-boy',
         'pytest-django',
         'pytest-cov',
-        'pytest-pep8',
+        'pytest-pycodestyle',
         'pytest-pylint',
     ],
     cmdclass={'test': PyTest},

@@ -36,13 +36,21 @@ class Tracker(models.Model):
     ip_city = models.CharField(max_length=255, blank=True)
     referrer = models.URLField(blank=True)
     device_type = models.CharField(
-        max_length=10, choices=DEVICE_TYPE, default=UNKNOWN)
+        max_length=10,
+        choices=DEVICE_TYPE,
+        default=UNKNOWN
+    )
     device = models.CharField(max_length=30, blank=True)
     browser = models.CharField(max_length=30, blank=True)
     browser_version = models.CharField(max_length=30, blank=True)
     system = models.CharField(max_length=30, blank=True)
     system_version = models.CharField(max_length=30, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
 
     objects = TrackerManager()
 

@@ -1,3 +1,4 @@
+# pylint: disable=unnecessary-lambda
 import factory
 from factory import fuzzy
 
@@ -34,7 +35,7 @@ class TrackerFactory(factory.django.DjangoModelFactory):
     ip_country = 'NL'
     ip_region = 'Noord-Holland'
     ip_city = 'Amsterdam'
-    device_type = factory.fuzzy.FuzzyChoice(
+    device_type = fuzzy.FuzzyChoice(
         choices=(choice[0] for choice in Tracker.DEVICE_TYPE))
     device = 'Other'
     browser = 'Firefox'

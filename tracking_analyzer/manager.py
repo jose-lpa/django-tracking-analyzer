@@ -60,7 +60,9 @@ class TrackerManager(models.Manager):
                 city = geo.city(ip_address)
             except (GeoIP2Error, GeoIP2Exception):
                 logger.exception(
-                    'Unable to determine geolocation for address %s', ip_address)
+                    'Unable to determine geolocation for address %s',
+                    ip_address
+                )
 
         tracker = self.model.objects.create(
             content_object=content_object,
@@ -77,7 +79,9 @@ class TrackerManager(models.Manager):
             system_version=request.user_agent.os.version_string,
             user=user
         )
-        logger.info('Tracked click in {0} {1}.'.format(
-            content_object._meta.object_name, content_object.pk))
+        logger.info(
+            'Tracked click in %s %s.',
+            content_object._meta.object_name, content_object.pk
+        )
 
         return tracker

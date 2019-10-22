@@ -1,11 +1,10 @@
-import os
 import gzip
+from os.path import isfile, join, splitext
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen
 
 
 class Command(BaseCommand):
@@ -35,8 +34,8 @@ class Command(BaseCommand):
         """
         if input('(y/n) ').lower() in ['y', 'yes']:
             return True
-        else:
-            return False
+
+        return False
 
     def install_dataset(self, geoip_dir, mm_url, mm_dataset):
         """
@@ -56,9 +55,9 @@ class Command(BaseCommand):
             self.stderr.write(str(error))
             raise CommandError('Unable to download MaxMind dataset.')
 
-        filename = os.path.join(geoip_dir, mm_dataset)
+        filename = join(geoip_dir, mm_dataset)
 
-        with open(filename, 'wb') as f:
+        with open(filename, 'wb') as file:
             metadata = resource.info()
             if hasattr(metadata, 'getheaders'):
                 meta_func = metadata.getheaders
@@ -80,7 +79,7 @@ class Command(BaseCommand):
                     break
 
                 file_size_dl += len(buffer)
-                f.write(buffer)
+                file.write(buffer)
 
                 status = "{0:16}".format(file_size_dl)
                 if file_size:
@@ -93,21 +92,20 @@ class Command(BaseCommand):
         self.stdout.write('Uncompressing downloaded dataset...')
 
         with gzip.open(filename, 'rb') as gzipped:
-            with open(os.path.splitext(filename)[0], 'wb') as gunzipped:
+            with open(splitext(filename)[0], 'wb') as gunzipped:
                 gunzipped.write(gzipped.read())
                 self.stdout.write(
                     '{0} dataset installed and ready for use.'.format(
-                        os.path.splitext(filename)[0]
+                        splitext(filename)[0]
                     )
                 )
 
     def checkout_datasets(self, geoip_dir, url, datasets):
         for dataset in datasets:
-            if os.path.isfile(os.path.join(
-                    geoip_dir, os.path.splitext(dataset)[0])):
+            if isfile(join(geoip_dir, splitext(dataset)[0])):
                 self.stdout.write(
                     '\nSeems that MaxMind dataset {0} is already installed in '
-                    '"{0}". Do you want to reinstall it?'.format(
+                    '"{1}". Do you want to reinstall it?'.format(
                         dataset, geoip_dir)
                 )
 
@@ -168,4 +166,3 @@ class Command(BaseCommand):
                 )
 
         self.checkout_datasets(geoip_dir, url, [countries, cities])
-

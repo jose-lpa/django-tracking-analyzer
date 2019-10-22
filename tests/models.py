@@ -14,8 +14,14 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
+    def save(
+        self, force_insert=False, force_update=False, using=None,
+        update_fields=None
+    ):
         if not self.slug:
             self.slug = slugify(self.title)
 
-        super(Post, self).save(*args, **kwargs)
+        super(Post, self).save(
+            force_insert=False, force_update=False, using=None,
+            update_fields=None
+        )

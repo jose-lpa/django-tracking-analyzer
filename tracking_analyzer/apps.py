@@ -7,4 +7,6 @@ class TrackingAnalyzerAppConfig(AppConfig):
     verbose_name = _('Django Tracking Analyzer')
 
     def ready(self):
-        from . import conf  # noqa
+        # pylint: disable=import-outside-toplevel
+        # pylint: disable=unused-import
+        from . import conf

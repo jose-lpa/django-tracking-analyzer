@@ -16,7 +16,7 @@ cache-size=500
 # R0201 Method could be a function
 # W0311 Bad indentation (complains about using 4 spaces instead of 1?)
 # C0303 Trailing whitespace
-# E1101 Instance of '<classname>' has no '<variable>' member (doesn't work with multiple inheritence?)
+# E1101 Instance of '<classname>' has no '<variable>' member (doesn't work with multiple inheritance?)
 # R0801 Similar lines in X files http://stackoverflow.com/questions/12209430/pylint-raising-r0801-for-coding-declaration-lines
 # R0901 Too many ancestors (nearly every class-based view)
 # R0904 Too many public methods (every ModelAdmin subclass)
@@ -66,14 +66,14 @@ notes=FIXME,XXX,TODO
 
 
 [FORMAT]
-max-line-length=160
+max-line-length=79
 max-module-lines=500
 indent-string=' '
 
 
 [DESIGN]
 max-args=10
-max-locals=15
+max-locals=20
 max-returns=6
 max-branchs=12
 max-statements=50

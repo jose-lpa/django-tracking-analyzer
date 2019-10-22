@@ -12,6 +12,7 @@ from tracking_analyzer.models import Tracker
 from .factories import TrackerFactory, UserFactory
 
 
+# pylint: disable=too-many-instance-attributes
 class TrackerAdminTestCase(TestCase):
     def setUp(self):
         self.tracker_1 = TrackerFactory.create(

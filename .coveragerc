@@ -3,4 +3,3 @@ omit =
     tests/*
     docs/*
     tracking_analyzer/migrations/*
-    tracking_analyzer/compat.py
