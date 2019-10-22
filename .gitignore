@@ -1,5 +1,7 @@
 # Development.
+.idea/
 *.pyc
+.python-version
 .*.swp
 
 # Testing and code coverage.

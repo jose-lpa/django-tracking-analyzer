@@ -1,15 +1,28 @@
 language: python
 python:
-  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+dist: bionic
+
+addons:
+  postgresql: "10.10"
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
+
+install:
+  - pip install codecov tox
 
 services:
   - postgresql
 
-addons:
-  postgresql: "9.4"
-
-install:
-  - pip install codecov tox
+before_script:
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start 10.10
+  - psql -c 'CREATE DATABASE tracking_analyzer_test;' -U postgres
 
 script:
   - tox --
@@ -18,10 +31,5 @@ after_success:
   - codecov
 
 env:
-  - TOXENV=py27-django19
-  - TOXENV=py34-django19
-  - TOXENV=py35-django19
-
-  - TOXENV=py27-django110
-  - TOXENV=py34-django110
-  - TOXENV=py35-django110
+  - TOXENV=django21
+  - TOXENV=django22

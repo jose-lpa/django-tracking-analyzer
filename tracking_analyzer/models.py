@@ -1,17 +1,13 @@
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from django_countries.fields import CountryField
 
 from .manager import TrackerManager
 
 
-@python_2_unicode_compatible
 class Tracker(models.Model):
     """
     A generic tracker model, which can be related to any other model to track
