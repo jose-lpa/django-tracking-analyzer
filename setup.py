@@ -6,6 +6,10 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 
+with open('README.rst', 'r') as readme:
+    long_description = readme.read()
+
+
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
@@ -29,6 +33,7 @@ setup(
     name='django-tracking-analyzer',
     version='1.0.0',
     description='User actions tracking and analytics for Django sites.',
+    long_description=long_description,
     author='José Luis Patiño Andrés',
     author_email='jose.lpa@gmail.com',
     url='https://github.com/jose-lpa/django-tracking-analyzer',
