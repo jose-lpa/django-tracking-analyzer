@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Django Tracking Analyzer'
-copyright = '2016, José Luis Patiño Andrés'
+copyright = '2019, José Luis Patiño Andrés'
 author = 'José Luis Patiño Andrés'
 
 # The version info for the project you're documenting, acts as replacement for
