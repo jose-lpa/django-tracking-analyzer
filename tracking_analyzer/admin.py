@@ -68,10 +68,12 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP Address' column rows display.
         """
         if obj.ip_address:
-            return format_html('<a href="{0}?ip_address__exact={1}">{1}</a>'.format(
-                reverse('admin:tracking_analyzer_tracker_changelist'),
-                obj.ip_address,
-            ))
+            return format_html(
+                '<a href="{0}?ip_address__exact={1}">{1}</a>'.format(
+                    reverse('admin:tracking_analyzer_tracker_changelist'),
+                    obj.ip_address,
+                )
+            )
 
         return '-'
 
@@ -83,11 +85,13 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP Country' column rows display.
         """
         if obj.ip_country:
-            return format_html('<a href="{0}?ip_country__exact={1}">{2}</a>'.format(
-                reverse('admin:tracking_analyzer_tracker_changelist'),
-                obj.ip_country,
-                obj.ip_country.name
-            ))
+            return format_html(
+                '<a href="{0}?ip_country__exact={1}">{2}</a>'.format(
+                    reverse('admin:tracking_analyzer_tracker_changelist'),
+                    obj.ip_country,
+                    obj.ip_country.name
+                )
+            )
 
         return '-'
 
@@ -99,10 +103,12 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP City' column rows display.
         """
         if obj.ip_city:
-            return format_html('<a href="{0}?ip_city__exact={1}">{1}</a>'.format(
-                reverse('admin:tracking_analyzer_tracker_changelist'),
-                obj.ip_city,
-            ))
+            return format_html(
+                '<a href="{0}?ip_city__exact={1}">{1}</a>'.format(
+                    reverse('admin:tracking_analyzer_tracker_changelist'),
+                    obj.ip_city,
+                )
+            )
 
         return '-'
 
@@ -114,11 +120,13 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'User' column rows display.
         """
         if obj.user:
-            return format_html('<a href="{0}?user__id__exact={1}">{2}</a>'.format(
-                reverse('admin:tracking_analyzer_tracker_changelist'),
-                obj.user.pk,
-                obj.user
-            ))
+            return format_html(
+                '<a href="{0}?user__id__exact={1}">{2}</a>'.format(
+                    reverse('admin:tracking_analyzer_tracker_changelist'),
+                    obj.user.pk,
+                    obj.user
+                )
+            )
 
         return 'Anonymous'
 
