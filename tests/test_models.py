@@ -45,7 +45,7 @@ class TrackerTestCase(TestCase):
 
         self.assertEqual(tracker.browser, 'Chrome')
         self.assertEqual(tracker.browser_version, '49.0.2623')
-        self.assertEqual(tracker.device, 'Other')
+        self.assertEqual(tracker.device, 'Mac')
         self.assertEqual(tracker.device_type, Tracker.PC)
         self.assertEqual(tracker.system, 'Mac OS X')
         self.assertEqual(tracker.system_version, '10.10.5')
@@ -73,7 +73,7 @@ class TrackerTestCase(TestCase):
 
         self.assertEqual(tracker.browser, 'Chrome')
         self.assertEqual(tracker.browser_version, '49.0.2623')
-        self.assertEqual(tracker.device, 'Other')
+        self.assertEqual(tracker.device, 'Mac')
         self.assertEqual(tracker.device_type, Tracker.PC)
         self.assertEqual(tracker.system, 'Mac OS X')
         self.assertEqual(tracker.system_version, '10.10.5')
