@@ -8,6 +8,7 @@
 .coverage
 coverage.xml
 junit.xml
+.tox
 
 # Distribution / packaging
 build/
