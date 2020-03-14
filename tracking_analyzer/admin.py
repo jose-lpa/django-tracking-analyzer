@@ -3,6 +3,7 @@ import json
 from django.contrib import admin
 from django.db.models import Count
 from django.urls import reverse
+from django.utils.html import format_html
 
 from django_countries import countries
 
@@ -39,8 +40,8 @@ class TrackerAdmin(admin.ModelAdmin):
         """
         Define the 'Details' column rows display.
         """
-        return '<a href="{0}">Details</a>'.format(
-            reverse('admin:tracking_analyzer_tracker_change', args=(obj.pk,)))
+        return format_html('<a href="{0}">Details</a>'.format(
+            reverse('admin:tracking_analyzer_tracker_change', args=(obj.pk,))))
 
     details.allow_tags = True
     details.short_description = 'Details'
@@ -49,7 +50,7 @@ class TrackerAdmin(admin.ModelAdmin):
         """
         Define the 'Content Object' column rows display.
         """
-        return (
+        return format_html(
             '<a href="{0}?content_type__id__exact={1}&object_id__exact={2}">'
             '{3}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
@@ -67,10 +68,10 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP Address' column rows display.
         """
         if obj.ip_address:
-            return '<a href="{0}?ip_address__exact={1}">{1}</a>'.format(
+            return format_html('<a href="{0}?ip_address__exact={1}">{1}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.ip_address,
-            )
+            ))
 
         return '-'
 
@@ -82,11 +83,11 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP Country' column rows display.
         """
         if obj.ip_country:
-            return '<a href="{0}?ip_country__exact={1}">{2}</a>'.format(
+            return format_html('<a href="{0}?ip_country__exact={1}">{2}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.ip_country,
                 obj.ip_country.name
-            )
+            ))
 
         return '-'
 
@@ -98,10 +99,10 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'IP City' column rows display.
         """
         if obj.ip_city:
-            return '<a href="{0}?ip_city__exact={1}">{1}</a>'.format(
+            return format_html('<a href="{0}?ip_city__exact={1}">{1}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.ip_city,
-            )
+            ))
 
         return '-'
 
@@ -113,11 +114,11 @@ class TrackerAdmin(admin.ModelAdmin):
         Define the 'User' column rows display.
         """
         if obj.user:
-            return '<a href="{0}?user__id__exact={1}">{2}</a>'.format(
+            return format_html('<a href="{0}?user__id__exact={1}">{2}</a>'.format(
                 reverse('admin:tracking_analyzer_tracker_changelist'),
                 obj.user.pk,
                 obj.user
-            )
+            ))
 
         return 'Anonymous'
 
