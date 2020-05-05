@@ -11,9 +11,5 @@ def get_requests_count(queryset):
     :return: List of dictionaries with the requests count per minute.
     """
     return queryset.annotate(
-        date=TruncDate('timestamp'),
-        hour=Extract('timestamp', 'hour'),
-        minute=Extract('timestamp', 'minute')
-    ).values(
-        'date', 'hour', 'minute'
+        'timestamp', 'date', 'hour', 'minute'
     ).annotate(requests=Count('pk'))

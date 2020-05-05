@@ -201,10 +201,12 @@ class TrackerAdmin(admin.ModelAdmin):
                 Tracker.objects.filter(pk__in=current_pks))
 
             for item in current_results:
+                timestamp = item.pop('timestamp')
+
                 item['date'] = '{date}T{hour:02d}:{minute:02d}'.format(
-                    date=item.pop('date'),
-                    hour=item.pop('hour'),
-                    minute=item.pop('minute')
+                    date=str(timestamp.date()),
+                    hour=timestamp.hour,
+                    minute=timestamp.minute
                 )
 
             extra_context['requests_count'] = json.dumps(list(current_results))
