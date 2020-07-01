@@ -31,5 +31,5 @@ after_success:
   - codecov
 
 env:
-  - TOXENV=django21
   - TOXENV=django22
+  - TOXENV=django30
