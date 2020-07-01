@@ -115,14 +115,15 @@ class TrackerTestCase(TestCase):
         the system must keep moving. Just GeoIP data won't be available.
         """
         # Modify the request object to unset the `REMOTE_ADDR` IP meta data.
-        # That should make the using of `ipware.ip.get_real_ip()` method return
-        # an empty IP value. The system must deal with empty IP addresses.
+        # That should make the using of `ipware.ip.get_client_ip()` method
+        # return an empty IP value. The system must deal with empty IP
+        # addresses.
         self.request.META['REMOTE_ADDR'] = ''
 
         tracker = Tracker.objects.create_from_request(self.request, self.post)
 
         # Now check the results. Empty data for IP address and GeoIP stuff.
-        self.assertEqual(tracker.ip_address, '')
+        self.assertEqual(tracker.ip_address, None)
         self.assertEqual(tracker.ip_country, '')
         self.assertEqual(tracker.ip_region, '')
         self.assertEqual(tracker.ip_city, '')

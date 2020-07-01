@@ -12,7 +12,7 @@ class Post(models.Model):
     published = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     def save(
         self, force_insert=False, force_update=False, using=None,

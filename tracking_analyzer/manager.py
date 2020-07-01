@@ -6,7 +6,7 @@ from django.db import models
 from django.http import HttpRequest
 
 from geoip2.errors import GeoIP2Error
-from ipware.ip import get_real_ip
+from ipware.ip import get_client_ip
 
 
 logger = logging.getLogger('tracking_analyzer')
@@ -50,7 +50,7 @@ class TrackerManager(models.Manager):
         city = {}
 
         # Get the IP address and so the geographical info, if available.
-        ip_address = get_real_ip(request) or ''
+        ip_address, _ = get_client_ip(request) or ''
         if not ip_address:
             logger.debug(
                 'Could not determine IP address for request %s', request)
