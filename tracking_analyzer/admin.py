@@ -198,7 +198,7 @@ class TrackerAdmin(admin.ModelAdmin):
                 current_page + 1).object_list.values_list('pk', flat=True)
 
             current_results = get_requests_count(
-                Tracker.objects.filter(pk__in=current_pks))
+                Tracker.objects.filter(pk__in=list(current_pks)))
 
             for item in current_results:
                 item['date'] = '{date}T{hour:02d}:{minute:02d}'.format(
