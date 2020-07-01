@@ -44,7 +44,7 @@ setup(
         'Django>=2.1',
         'django-appconf',
         'django-countries',
-        'django-ipware',
+        'django-ipware>=3.0',
         'django-user-agents',
         'geoip2'
     ],
