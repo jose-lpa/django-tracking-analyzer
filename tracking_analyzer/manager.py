@@ -73,7 +73,7 @@ class TrackerManager(models.Manager):
             referrer=request.META.get('HTTP_REFERER', ''),
             device_type=device_type,
             device=request.user_agent.device.family,
-            browser=request.user_agent.browser.family,
+            browser=request.user_agent.browser.family[:30],
             browser_version=request.user_agent.browser.version_string,
             system=request.user_agent.os.family,
             system_version=request.user_agent.os.version_string,
