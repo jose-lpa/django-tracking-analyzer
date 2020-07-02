@@ -279,3 +279,34 @@ class TrackerTestCase(TestCase):
         tracker = Tracker.objects.create_from_request(self.request, self.post)
 
         self.assertEqual(tracker.device_type, Tracker.UNKNOWN)
+
+    @mock.patch('tracking_analyzer.manager.GeoIP2')
+    def test_create_from_request_wrong_user_agent(self, mock_geoip2):
+        """
+        Tests the ``create_from_request`` method with a wrong user agent.
+        """
+        # Mock the response from `GeoIP2.city()` method.
+        mock_geoip2().city.return_value = {
+            'country_code': 'US',
+            'region': 'CA',
+            'city': 'San Francisco'
+        }
+
+        request = build_mock_request(
+            '/testing/', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxbot'
+        )
+
+        tracker = Tracker.objects.create_from_request(request, self.post)
+
+        self.assertEqual(tracker.browser, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        self.assertEqual(tracker.browser_version, '')
+        self.assertEqual(tracker.device, 'Spider')
+        self.assertEqual(tracker.device_type, Tracker.BOT)
+        self.assertEqual(tracker.system, 'Other')
+        self.assertEqual(tracker.system_version, '')
+        self.assertEqual(tracker.ip_address, '208.67.222.222')
+        self.assertEqual(tracker.ip_country, 'US')
+        self.assertEqual(tracker.ip_region, 'CA')
+        self.assertEqual(tracker.ip_city, 'San Francisco')
+        self.assertEqual(tracker.object_id, self.post.pk)
+        self.assertEqual(tracker.user, self.request.user)
