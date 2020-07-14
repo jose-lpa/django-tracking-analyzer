@@ -70,6 +70,7 @@ class TrackerManager(models.Manager):
             ip_country=city.get('country_code', '') or '',
             ip_region=city.get('region', '') or '',
             ip_city=city.get('city', '') or '',
+            current_url=request.path,
             referrer=request.META.get('HTTP_REFERER', ''),
             device_type=device_type,
             device=request.user_agent.device.family,
