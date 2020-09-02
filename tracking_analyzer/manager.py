@@ -55,8 +55,8 @@ class TrackerManager(models.Manager):
             logger.debug(
                 'Could not determine IP address for request %s', request)
         else:
-            geo = GeoIP2()
             try:
+                geo = GeoIP2()
                 city = geo.city(ip_address)
             except (GeoIP2Error, GeoIP2Exception):
                 logger.exception(
