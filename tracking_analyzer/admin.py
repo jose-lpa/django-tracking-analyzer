@@ -195,7 +195,7 @@ class TrackerAdmin(admin.ModelAdmin):
             # Requests time line for the current page changelist.
             current_page = response.context_data['cl'].page_num
             current_pks = response.context_data['cl'].paginator.page(
-                current_page + 1).object_list.values_list('pk', flat=True)
+                current_page).object_list.values_list('pk', flat=True)
 
             current_results = get_requests_count(
                 Tracker.objects.filter(pk__in=list(current_pks)))
